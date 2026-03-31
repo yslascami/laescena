@@ -131,23 +131,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\camis\\OneDrive\\Desktop\\LAESCENA\\LaEscenaFrontend-main\\LaEscenaFrontend-main\\composeApp\\src\\androidMain\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "45",
-                        "endOffsets": "57"
-                    },
-                    "to": {
-                        "startLines": "102",
-                        "startColumns": "4",
-                        "startOffsets": "6212",
-                        "endColumns": "45",
-                        "endOffsets": "6253"
-                    }
-                },
-                {
                     "source": "C:\\Users\\camis\\.gradle\\caches\\8.14.3\\transforms\\544b21927dba0ad79b0f96510a599c43\\transformed\\startup-runtime-1.1.1\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -232,6 +215,23 @@
                         "startOffsets": "4581,4758",
                         "endColumns": "53,66",
                         "endOffsets": "4630,4820"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\src\\androidMain\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "45",
+                        "endOffsets": "57"
+                    },
+                    "to": {
+                        "startLines": "102",
+                        "startColumns": "4",
+                        "startOffsets": "6212",
+                        "endColumns": "45",
+                        "endOffsets": "6253"
                     }
                 },
                 {

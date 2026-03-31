@@ -47,6 +47,9 @@ fun AppNavigation() {
                     navController.navigate(role) {
                         popUpTo("login") { inclusive = true }
                     }
+                },
+                onNavigateToRegister = {
+                    navController.navigate("register")
                 }
             )
         }
