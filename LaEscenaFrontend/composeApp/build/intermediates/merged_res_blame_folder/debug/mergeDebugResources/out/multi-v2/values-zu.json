@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "org.example.project.composeApp-mergeDebugResources-53:/values-zu/values-zu.xml",
+            "outputFile": "org.example.project.composeApp-mergeDebugResources-54:/values-zu/values-zu.xml",
             "map": [
                 {
                     "source": "C:\\Users\\camis\\.gradle\\caches\\8.14.3\\transforms\\01bf665215f0c9367364a866c095ab2b\\transformed\\ui-release\\res\\values-zu\\values-zu.xml",

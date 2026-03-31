@@ -83,7 +83,7 @@ fun AppNavigation() {
         composable("artistas") { ArtistasScreen() }
         composable("artist") { ArtistScreen() }
         composable("centrocultural") { CentroCulturalScreen() }
-        //composable("agenda") { AgendaScreen() }
+        composable("agenda") { AgendaScreen() }
     }
 }
 

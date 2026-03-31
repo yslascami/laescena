@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "org.example.project.composeApp-mergeDebugResources-53:/values-bn/values-bn.xml",
+            "outputFile": "org.example.project.composeApp-mergeDebugResources-54:/values-bn/values-bn.xml",
             "map": [
                 {
                     "source": "C:\\Users\\camis\\.gradle\\caches\\8.14.3\\transforms\\f97c68b525db191d6070e26abfb4dd34\\transformed\\foundation-release\\res\\values-bn\\values-bn.xml",
