@@ -63,6 +63,7 @@ fun AppNavigation() {
 
         // Perfiles
         composable("superadmin") { SuperAdminScreen() }
+        composable("artistas") { ArtistasScreen() }
         composable("artist") { ArtistScreen() }
         composable("centrocultural") { CentroCulturalScreen() }
     }
@@ -84,7 +85,7 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(30.dp))
         Button(onClick = {}) { Text("Ver eventos") }
         Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Ver artistas") }
+        Button(onClick = { navController.navigate("artistas") }) { Text("Ver artistas") }
         Spacer(modifier = Modifier.height(10.dp))
         Button(onClick = {}) { Text("Galerías disponibles") }
         Spacer(modifier = Modifier.height(10.dp))
