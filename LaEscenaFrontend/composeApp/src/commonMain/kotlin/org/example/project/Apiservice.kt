@@ -30,6 +30,14 @@ data class CommonResponse(
     val role: String? = null
 )
 
+@Serializable
+data class Artista(
+    val id: Int,
+    val nombre: String,
+    val correo: String,
+    val telefono: String
+)
+
 class Apiservice {
 
     private val client = HttpClient {
@@ -64,7 +72,21 @@ class Apiservice {
             CommonResponse(success = false, message = "Error de conexión: ${e.message ?: "Error desconocido"}")
         }
     }
+    suspend fun getArtistas(): List<Artista> {
+        return try {
+            client.get("$baseUrl/artistas").body()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 
+    suspend fun getArtista(id: Int): Artista? {
+        return try {
+            client.get("$baseUrl/artistas/$id").body()
+        } catch (e: Exception) {
+            null
+        }
+    }
     suspend fun registrarUsuario(email: String, password: String, role: String): CommonResponse {
         return try {
             val response: HttpResponse = client.post("$baseUrl/register") {
