@@ -1,5 +1,19 @@
 package org.example.project
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,7 +25,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -69,45 +83,213 @@ fun AppNavigation() {
         composable("artistas") { ArtistasScreen() }
         composable("artist") { ArtistScreen() }
         composable("centrocultural") { CentroCulturalScreen() }
+        //composable("agenda") { AgendaScreen() }
     }
 }
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    val viewModel: ArtistasViewModel = viewModel { ArtistasViewModel() }
+    val artistas by viewModel.artistas.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    var searchQuery by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        viewModel.cargarArtistas()
+    }
+
+    val artistasFiltrados = artistas.filter {
+        it.nombre.contains(searchQuery, ignoreCase = true)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(ColorFondo)
     ) {
-        Text(
-            text = "Bienvenido a La Escena",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        Button(onClick = {}) { Text("Ver eventos") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = { navController.navigate("artistas") }) { Text("Ver artistas") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Galerías disponibles") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Centro cultural") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(
-            onClick = { navController.navigate("register") }
+        // Header
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Registrarse (artistas)")
+            Text(
+                text = "La Escena",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = ColorPrimario
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                IconButton(onClick = { navController.navigate("agenda") }) {
+                    Icon(
+                        imageVector = Icons.Default.DateRange,
+                        contentDescription = "Agenda",
+                        tint = ColorTexto
+                    )
+                }
+                IconButton(onClick = { navController.navigate("login") }) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Perfil",
+                        tint = ColorTexto
+                    )
+                }
+            }
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            onClick = { navController.navigate("login") }
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text("Ingresar")
+            // Card Centro Cultural
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = ColorSuperficie)
+                ) {
+                    Box(modifier = Modifier.fillMaxWidth().height(200.dp)) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color(0xFF3A2A2A))
+                        )
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = "Centro Cultural",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = ColorTexto
+                            )
+                            Text(
+                                text = "Descubre eventos, exposiciones y actividades culturales",
+                                fontSize = 13.sp,
+                                color = ColorTextoSecundario
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Button(
+                                onClick = { navController.navigate("centrocultural") },
+                                colors = ButtonDefaults.buttonColors(containerColor = ColorPrimario),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Text("Ver más", color = Color.White)
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Icon(
+                                    Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Barra de búsqueda
+            item {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Buscar artistas o disciplinas...", color = ColorTextoSecundario) },
+                    leadingIcon = {
+                        Icon(Icons.Default.Search, contentDescription = null, tint = ColorTextoSecundario)
+                    },
+                    trailingIcon = {
+                        Icon(Icons.Default.Menu, contentDescription = null, tint = ColorTextoSecundario)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = ColorPrimario,
+                        unfocusedBorderColor = Color(0xFF444444),
+                        focusedTextColor = ColorTexto,
+                        unfocusedTextColor = ColorTexto,
+                        cursorColor = ColorPrimario
+                    )
+                )
+            }
+
+            // Contador
+            item {
+                Text(
+                    text = "${artistasFiltrados.size} artistas encontrados",
+                    color = ColorTextoSecundario,
+                    fontSize = 13.sp
+                )
+            }
+
+            // Lista de artistas
+            if (isLoading) {
+                item {
+                    CircularProgressIndicator(
+                        modifier = Modifier.fillMaxWidth().wrapContentWidth(),
+                        color = ColorPrimario
+                    )
+                }
+            } else {
+                items(artistasFiltrados) { artista ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = ColorSuperficie)
+                    ) {
+                        Box(modifier = Modifier.fillMaxWidth().height(180.dp)) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color(0xFF2A2A3A))
+                            )
+                            // Badge disciplina
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(12.dp)
+                                    .background(ColorPrimario, RoundedCornerShape(20.dp))
+                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                            ) {
+                                Text("Artista", color = Color.White, fontSize = 11.sp)
+                            }
+                        }
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column {
+                                    Text(
+                                        text = artista.nombre,
+                                        fontSize = 17.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = ColorTexto
+                                    )
+                                    Text(
+                                        text = artista.correo,
+                                        fontSize = 13.sp,
+                                        color = ColorTextoSecundario
+                                    )
+                                }
+                                Icon(
+                                    Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = ColorPrimario
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
-
 @Composable
 fun SuperAdminScreen() {
     Column(
