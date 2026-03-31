@@ -23,7 +23,8 @@ MERGED from [androidx.compose.ui:ui-text-android:1.7.2] C:\Users\camis\.gradle\c
 MERGED from [androidx.compose.ui:ui-graphics-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\b9702616d1283fcd0d930f28dfe57111\transformed\ui-graphics-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-geometry-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\913d1cdde518f9e004c057df0b020cfe\transformed\ui-geometry-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\9f9c14118cbc88db9e0faa61e854111f\transformed\ui-tooling-release\AndroidManifest.xml:17:1-28:12
-MERGED from [androidx.compose.material:material:1.0.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\0c79b30111382e725f8b4edda1bbfcb0\transformed\material-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.compose.material:material-android:1.6.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\62f43a942f5182d429f86f4dc1a21793\transformed\material-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\5a981817b73ca808beb24ef17e743ac6\transformed\material-icons-extended-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-ripple-android:1.7.1] C:\Users\camis\.gradle\caches\8.14.3\transforms\93185a6cdd1ee92d897b6e5dd662b2d1\transformed\material-ripple-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.animation:animation-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\a4052c0559dade8cf92c0aa3713ada36\transformed\animation-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-icons-core-android:1.7.1] C:\Users\camis\.gradle\caches\8.14.3\transforms\0936a48103654a10d244a8421169a9f9\transformed\material-icons-core-release\AndroidManifest.xml:2:1-7:12
@@ -167,8 +168,10 @@ MERGED from [androidx.compose.ui:ui-geometry-android:1.7.2] C:\Users\camis\.grad
 MERGED from [androidx.compose.ui:ui-geometry-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\913d1cdde518f9e004c057df0b020cfe\transformed\ui-geometry-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\9f9c14118cbc88db9e0faa61e854111f\transformed\ui-tooling-release\AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\9f9c14118cbc88db9e0faa61e854111f\transformed\ui-tooling-release\AndroidManifest.xml:20:5-44
-MERGED from [androidx.compose.material:material:1.0.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\0c79b30111382e725f8b4edda1bbfcb0\transformed\material-1.0.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.compose.material:material:1.0.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\0c79b30111382e725f8b4edda1bbfcb0\transformed\material-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.compose.material:material-android:1.6.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\62f43a942f5182d429f86f4dc1a21793\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\62f43a942f5182d429f86f4dc1a21793\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\5a981817b73ca808beb24ef17e743ac6\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.0] C:\Users\camis\.gradle\caches\8.14.3\transforms\5a981817b73ca808beb24ef17e743ac6\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material:material-ripple-android:1.7.1] C:\Users\camis\.gradle\caches\8.14.3\transforms\93185a6cdd1ee92d897b6e5dd662b2d1\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material:material-ripple-android:1.7.1] C:\Users\camis\.gradle\caches\8.14.3\transforms\93185a6cdd1ee92d897b6e5dd662b2d1\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.animation:animation-android:1.7.2] C:\Users\camis\.gradle\caches\8.14.3\transforms\a4052c0559dade8cf92c0aa3713ada36\transformed\animation-release\AndroidManifest.xml:5:5-44
