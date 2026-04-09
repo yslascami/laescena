@@ -4,7 +4,7 @@
             "outputFile": "org.example.project.composeApp-mergeDebugResources-53:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\camis\\.gradle\\caches\\8.14.3\\transforms\\0a0791a8f2699a7d5272cc711b997d08\\transformed\\core-1.13.1\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\diego\\.gradle\\caches\\8.14.3\\transforms\\861dda46144b940f282d4eb13067504e\\transformed\\core-1.13.1\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
