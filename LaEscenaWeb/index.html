@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>La Escena</title>
+	<style>
+button{
+	background-color:blanchedalmond;
+	color: black;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+}
+
+		body {
+			margin:0; /*Para quitar margenes*/
+			font-family: Arial, sans-serif; /*Estilo de letra*/
+}
+
+.container{
+	display: grid; /*Activar cuadricula*/
+	grid-template-rows: 150px 1fr; /* 3 filas una para titulo, contenido y una para pie de pagina*/
+	grid-template-columns: 200px 1fr; /*2 columnas 1 para menu y otra para contenido*/
+	height: 100vh; /*Es para decirle que ocupe toda la ventana*/
+}
+
+.logo-container { 
+	grid-column: 1 / 2; /* Ocupa la primera columna */ 
+	grid-row: 1 / 2; /* Ocupa la primera fila */ 
+	background: #3B081E; /* Un color ligeramente diferente para diferenciarlo */ 
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+	overflow: hidden; /* Asegura que la imagen no se salga si es muy grande */ }
+
+	 /* Estilo opcional para que la imagen se ajuste bien al espacio */ 
+	.logo-container img { 
+		
+		object-fit: contain; 
+		width: 130px ;
+		height:auto;		
+}  
+
+header {
+	grid-column: 2/3; /*El header ocupa las dos columnas*/
+	background: rgb(129, 52, 58); /*Poner color del fondo*/
+	color: black; /*Color del texto*/
+	display: flex; /*Permite centrar el texto dentro del encabezado*/
+	align-items: center; /*Es para centrar verticalmente el contenido*/
+	justify-content: center; /*Es para centrar horizontalmente el contenido*/
+}
+nav {
+	background: rgb(129, 52, 58); /*Fondo del nav*/
+	padding: 20px; /*Espacio internio alrededor del contenido*/
+}
+main{
+	background: rgb(255, 255, 255); /*Fondo del main*/
+	padding: 20px; /* espacio interno alrededor del contenido*/
+}
+
+	</style>
+</head>
+<body> 
+	<div class="container">
+		<div class = "logo-container">
+			<img src = "logo.png" alt = "logo">
+		</div>
+
+
+
+
+
+	<header>
+		<h1> La Escena</h1>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="#" style="color: white;font-family: verdana;">Inicio</a></li>
+        <li><a href="CC.html" style="color: white;font-family: verdana;">Centro Cultural</a></li>
+        <li><a href="AT.html" style="color: white;font-family: verdana;">Artistas</a></li>
+	<li><a href="eve.html" style="color: white;font-family: verdana;">Eventos</a></li>
+	<button onclick="location.href='gale.html'">Galeria</button>
+	<li><a href="Reg.html" style="color: white;font-family: verdana;">Registro</a></li>
+	<li><a href="ing.html" style="color: white;font-family: verdana;">Ingresar</a></li>
+
+		</ul>
+	</nav>
+	<main>
+		<h2>Bienvenidos a La Escena</h2>
+		<p>La Escena es un espacio dedicado a la promoción de la cultura y el arte en nuestra comunidad. Aquí encontrarás información sobre eventos culturales, artistas locales y oportunidades para participar en actividades artísticas. ¡Únete a nosotros y descubre todo lo que La Escena tiene para ofrecer!</p>
+		<iframe name="contenido" style="width:100%; height:600px; border:none;"></iframe> </main>
+	</main>
+	</div>
+
+</body>
+	
+</html>
