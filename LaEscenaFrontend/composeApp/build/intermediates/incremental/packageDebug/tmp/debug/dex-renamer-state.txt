@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Mon Mar 30 23:01:53 CST 2026
 base.0=C\:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
@@ -5,15 +6,29 @@ base.2=C\:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\build\\interme
 base.3=C\:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
 base.4=C\:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
 base.5=C\:\\Users\\camis\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
+=======
+#Tue Mar 31 10:28:12 CST 2026
+base.0=C\:\\Users\\diego\\OneDrive\\Documentos\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\diego\\OneDrive\\Documentos\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\diego\\OneDrive\\Documentos\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
+base.3=C\:\\Users\\diego\\OneDrive\\Documentos\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
+base.4=C\:\\Users\\diego\\OneDrive\\Documentos\\laescena\\LaEscenaFrontend\\composeApp\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+>>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=12/classes.dex
 path.3=4/classes.dex
 path.4=classes2.dex
+<<<<<<< HEAD
 path.5=classes3.dex
+=======
+>>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
 renamed.0=classes.dex
 renamed.1=classes2.dex
 renamed.2=classes3.dex
 renamed.3=classes4.dex
 renamed.4=classes5.dex
+<<<<<<< HEAD
 renamed.5=classes6.dex
+=======
+>>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
