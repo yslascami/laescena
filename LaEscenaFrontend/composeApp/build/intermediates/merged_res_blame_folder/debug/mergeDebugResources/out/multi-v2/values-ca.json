@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "org.example.project.composeApp-mergeDebugResources-53:/values-ca/values-ca.xml",
+            "outputFile": "org.example.project.composeApp-mergeDebugResources-54:/values-ca/values-ca.xml",
             "map": [
                 {
                     "source": "C:\\Users\\diego\\.gradle\\caches\\8.14.3\\transforms\\861dda46144b940f282d4eb13067504e\\transformed\\core-1.13.1\\res\\values-ca\\values-ca.xml",
