@@ -50,7 +50,7 @@ if (mysqli_num_rows($result) > 0) {
     } elseif ($role == 'artista') {
         header("Location: perfil.php");
     } elseif ($role == 'centrocultural') {
-        header("Location: CC.html");
+        header("Location: panel_cc.php");
     } else {
         header("Location: index.html");
     }
