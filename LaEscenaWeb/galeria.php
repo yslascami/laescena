@@ -1,118 +1,178 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $host = "localhost";
 $user = "root";
 $password = "";
 $database = "laescena";
-
 $conn = mysqli_connect($host, $user, $password, $database);
-
-if (!$conn) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
+if (!$conn) die("Error de conexión: " . mysqli_connect_error());
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-    <title>Galerías - La Escena</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - La Escena</title>
+    <link rel="stylesheet" href="estilos.css">
     <style>
-        body {
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
+        .page-header {
+            margin-bottom: 30px;
         }
-        header {
-            background-color: rgb(173, 102, 108);
-            color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+
+        .page-header h1 {
+            font-size: 32px;
+            color: var(--primary);
         }
-        nav {
-            background-color: rgb(107, 91, 92);
-            padding: 20px;
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 6px;
         }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-right: 15px;
-            font-family: verdana;
-        }
-        main {
-            padding: 30px;
-        }
+
         .galeria-titulo {
-            color: rgb(129, 52, 58);
-            border-bottom: 2px solid rgb(173, 102, 108);
-            padding-bottom: 10px;
+            font-size: 24px;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            margin-top: 30px;
         }
+
+        .galeria-descripcion {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .fotos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
         .foto-card {
-            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
         }
+
+        .foto-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
         .foto-card img {
-            width: 648px;
-            height: 432px;
+            width: 100%;
+            height: 220px;
             object-fit: cover;
-            border-radius: 8px;
+            display: block;
         }
-        .foto-card footer {
-            color: rgb(107, 91, 92);
+
+        .foto-card .pie-foto {
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 13px;
             font-style: italic;
-            margin-top: 5px;
+            font-family: 'Cormorant Garamond', serif;
         }
-        .descripcion {
-            margin-bottom: 20px;
-            color: #333;
+
+        .no-galerias {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Galerías Actuales</h1>
-    </header>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="CC.html">Centro Cultural</a>
-        <a href="artistas.php">Artistas</a>
-        <a href="eventos.php">Eventos</a>
-        <a href="galeria.php">Galería</a>
-        <a href="Reg.html">Registro</a>
-        <a href="ing.html">Ingresar</a>
-    </nav>
-    <main>
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo La Escena">
+            <h2>La Escena</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="CC.html">Centro Cultural</a></li>
+                <li><a href="artistas.php">Artistas</a></li>
+                <li><a href="eventos.php">Eventos</a></li>
+                <li><a href="galeria.php" class="active">Galería</a></li>
+                <li><a href="Reg.html">Registro</a></li>
+                <li><a href="ing.html">Ingresar</a></li>
+            </ul>
+        </nav>
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-label">Modo oscuro</span>
+            <div class="toggle-switch on" id="toggle"></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Galerías</h1>
+            <p>Exposiciones y muestras artísticas en La Escena</p>
+        </div>
+
         <?php
-        // Obtener galerías únicas
         $sql_galerias = "SELECT DISTINCT titulo, descripcion, artista FROM galerias";
         $result_galerias = mysqli_query($conn, $sql_galerias);
 
-        while ($galeria = mysqli_fetch_assoc($result_galerias)) {
-            echo '<h2 class="galeria-titulo">' . htmlspecialchars($galeria['titulo']) . '</h2>';
-            
-            if (!empty($galeria['descripcion'])) {
-                echo '<p class="descripcion">' . htmlspecialchars($galeria['descripcion']) . '</p>';
-            }
+        if (mysqli_num_rows($result_galerias) > 0) {
+            while ($galeria = mysqli_fetch_assoc($result_galerias)) {
+                echo '<h2 class="galeria-titulo">' . htmlspecialchars($galeria['titulo']) . '</h2>';
 
-            // Obtener fotos de esta galería
-            $titulo = mysqli_real_escape_string($conn, $galeria['titulo']);
-            $sql_fotos = "SELECT * FROM galerias WHERE titulo = '$titulo'";
-            $result_fotos = mysqli_query($conn, $sql_fotos);
+                if (!empty($galeria['descripcion'])) {
+                    echo '<p class="galeria-descripcion">' . htmlspecialchars($galeria['descripcion']) . '</p>';
+                }
 
-            while ($foto = mysqli_fetch_assoc($result_fotos)) {
-                echo '<div class="foto-card">';
-                echo '<img src="' . htmlspecialchars($foto['imagen']) . '" alt="' . htmlspecialchars($foto['titulo']) . '">';
-                if (!empty($foto['pie_foto'])) {
-                    echo '<footer>' . htmlspecialchars($foto['pie_foto']) . '</footer>';
+                $titulo = mysqli_real_escape_string($conn, $galeria['titulo']);
+                $sql_fotos = "SELECT * FROM galerias WHERE titulo = '$titulo'";
+                $result_fotos = mysqli_query($conn, $sql_fotos);
+
+                echo '<div class="fotos-grid">';
+                while ($foto = mysqli_fetch_assoc($result_fotos)) {
+                    echo '<div class="foto-card">
+                        <img src="' . htmlspecialchars($foto['imagen']) . '" alt="' . htmlspecialchars($foto['titulo']) . '">';
+                    if (!empty($foto['pie_foto'])) {
+                        echo '<p class="pie-foto">' . htmlspecialchars($foto['pie_foto']) . '</p>';
+                    }
+                    echo '</div>';
                 }
                 echo '</div>';
             }
+        } else {
+            echo '<p class="no-galerias">No hay galerías disponibles.</p>';
         }
-
         mysqli_close($conn);
         ?>
-    </main>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('toggle');
+            const label = document.getElementById('theme-label');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                toggle.classList.remove('on');
+                label.textContent = 'Modo claro';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                toggle.classList.add('on');
+                label.textContent = 'Modo oscuro';
+            }
+            localStorage.setItem('theme', html.getAttribute('data-theme'));
+        }
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'light') {
+            document.getElementById('toggle').classList.remove('on');
+            document.getElementById('theme-label').textContent = 'Modo claro';
+        }
+    </script>
 </body>
 </html>
