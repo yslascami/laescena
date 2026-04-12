@@ -1,97 +1,364 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-	<meta charset="UTF-8">
-	<title>La Escena</title>
-	<style>
-button{
-	background-color:blanchedalmond;
-	color: black;
-	border: none;
-	padding: 5px 10px;
-	border-radius: 4px;
-}
-
-		body {
-			margin:0; /*Para quitar margenes*/
-			font-family: Arial, sans-serif; /*Estilo de letra*/
-}
-
-.container{
-	display: grid; /*Activar cuadricula*/
-	grid-template-rows: 150px 1fr; /* 3 filas una para titulo, contenido y una para pie de pagina*/
-	grid-template-columns: 200px 1fr; /*2 columnas 1 para menu y otra para contenido*/
-	height: 100vh; /*Es para decirle que ocupe toda la ventana*/
-}
-
-.logo-container { 
-	grid-column: 1 / 2; /* Ocupa la primera columna */ 
-	grid-row: 1 / 2; /* Ocupa la primera fila */ 
-	background: #3B081E; /* Un color ligeramente diferente para diferenciarlo */ 
-	display: flex; 
-	justify-content: center; 
-	align-items: center; 
-	overflow: hidden; /* Asegura que la imagen no se salga si es muy grande */ }
-
-	 /* Estilo opcional para que la imagen se ajuste bien al espacio */ 
-	.logo-container img { 
-		
-		object-fit: contain; 
-		width: 130px ;
-		height:auto;		
-}  
-
-header {
-	grid-column: 2/3; /*El header ocupa las dos columnas*/
-	background: rgb(129, 52, 58); /*Poner color del fondo*/
-	color: black; /*Color del texto*/
-	display: flex; /*Permite centrar el texto dentro del encabezado*/
-	align-items: center; /*Es para centrar verticalmente el contenido*/
-	justify-content: center; /*Es para centrar horizontalmente el contenido*/
-}
-nav {
-	background: rgb(129, 52, 58); /*Fondo del nav*/
-	padding: 20px; /*Espacio internio alrededor del contenido*/
-}
-main{
-	background: rgb(255, 255, 255); /*Fondo del main*/
-	padding: 20px; /* espacio interno alrededor del contenido*/
-}
-
-	</style>
-</head>
-<body> 
-	<div class="container">
-		<div class = "logo-container">
-			<img src = "logo.png" alt = "logo">
-		</div>
-
-
-
-
-
-	<header>
-		<h1> La Escena</h1>
-	</header>
-	<nav>
-		<ul>
-			<li><a href="#" style="color: white;font-family: verdana;">Inicio</a></li>
-        <li><a href="CC.html" style="color: white;font-family: verdana;">Centro Cultural</a></li>
-        <li><a href="artistas.php" style="color: white;font-family: verdana;">Artistas</a></li>
-	<li><a href="eventos.php" style="color: white;font-family: verdana;">Eventos</a></li>
-	<button onclick="location.href='galeria.php'">Galeria</button>
-	<li><a href="Reg.html" style="color: white;font-family: verdana;">Registro</a></li>
-	<li><a href="ing.html" style="color: white;font-family: verdana;">Ingresar</a></li>
-
-		</ul>
-	</nav>
-	<main>
-		<h2>Bienvenidos a La Escena</h2>
-		<p>La Escena es un espacio dedicado a la promoción de la cultura y el arte en nuestra comunidad. Aquí encontrarás información sobre eventos culturales, artistas locales y oportunidades para participar en actividades artísticas. ¡Únete a nosotros y descubre todo lo que La Escena tiene para ofrecer!</p>
-		<iframe name="contenido" style="width:100%; height:600px; border:none;"></iframe> </main>
-	</main>
-	</div>
-
-</body>
 	
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+	
+    <title>La Escena</title>
+	
+    <style>
+        :root[data-theme="dark"] {
+            --bg: #1C1C1C;
+            --sidebar-bg: #2A2A2A;
+            --card-bg: #2A2A2A;
+            --text: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --border: #3A3A3A;
+            --primary: rgb(173, 102, 108);
+            --primary-dark: rgb(129, 52, 58);
+        }
+
+        :root[data-theme="light"] {
+            --bg: #F4F4F4;
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --text: #1C1C1C;
+            --text-secondary: #666666;
+            --border: #DDDDDD;
+            --primary: rgb(173, 102, 108);
+            --primary-dark: rgb(129, 52, 58);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+}
+
+h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+	
+
+        /* SIDEBAR */
+        .sidebar {
+    width: 220px;
+    min-width: 220px;
+    background-color: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    position: fixed;
+    height: 100vh;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+}
+
+        .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.logo-container img {
+    width: 130px;
+    height: auto;
+    object-fit: contain;
+}
+
+        .logo-container h2 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        nav ul { list-style: none; padding: 0; }
+
+        nav ul li { margin-bottom: 4px; }
+
+        nav ul li a {
+			font-family: 'Cormorant Garamond', serif;
+    		font-weight: 400;
+    		letter-spacing: 1px;
+    		font-size: 15px;
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: verdana;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+            margin: 0 8px;
+            width: calc(100% - 16px);
+        }
+
+        nav ul li a:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        nav ul li a.active {
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+
+        /* TOGGLE MODO */
+        .theme-toggle {
+            margin: auto 20px 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 14px;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+        }
+
+        .toggle-switch {
+            width: 36px;
+            height: 20px;
+            background-color: var(--border);
+            border-radius: 4px;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.on { background-color: var(--primary); }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 4%;
+            top: 3px;
+            left: 3px;
+            transition: left 0.3s;
+        }
+
+        .toggle-switch.on::after { left: 19px; }
+
+        /* CONTENIDO */
+        .main-content {
+    margin-left: 220px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    width: calc(100% - 220px);
+    min-height: 100vh;
+	background-color: var(--bg);
+}
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .top-header h1 {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .btn-ingresar {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-ingresar:hover { background-color: var(--primary-dark); }
+
+        /* HERO */
+        .hero-card {
+            background: linear-gradient(135deg, #3B081E, var(--card-bg));
+            border-radius: 4px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .hero-card h2 { font-size: 32px; color: white; margin-bottom: 12px; }
+
+        .hero-card p {
+            color: #AAAAAA;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover { background-color: var(--primary-dark); }
+
+        /* CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, border-color 0.2s;
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .card-icon { font-size: 32px; margin-bottom: 12px; }
+
+        .card h3 { font-size: 18px; margin-bottom: 8px; }
+
+        .card p { color: var(--text-secondary); font-size: 14px; line-height: 1.5; }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo La Escena">
+            <h2>La Escena</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active"> Inicio</a></li>
+                <li><a href="CC.html"> Centro Cultural</a></li>
+                <li><a href="artistas.php"> Artistas</a></li>
+                <li><a href="eventos.php"> Eventos</a></li>
+                <li><a href="galeria.php"> Galería</a></li>
+                <li><a href="Reg.html">Registro</a></li>
+                <li><a href="ing.html"> Ingresar</a></li>
+            </ul>
+        </nav>
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-label"> Modo oscuro</span>
+            <div class="toggle-switch on" id="toggle"></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-header">
+            <h1>Bienvenido a La Escena</h1>
+        
+        </div>
+
+        <div class="hero-card">
+            <h2>Descubre el arte y la cultura</h2>
+            <p>La Escena es un espacio dedicado a la promoción de la cultura y el arte en nuestra comunidad. Aquí encontrarás información sobre eventos culturales, artistas locales y oportunidades para participar en actividades artísticas.</p>
+            <a href="eventos.php" class="btn-primary">Ver eventos →</a>
+        </div>
+
+        <div class="cards-grid">
+            <a href="artistas.php" class="card">
+                <div class="card-icon"></div>
+                <h3>Artistas</h3>
+                <p>Conoce a los artistas locales y su trabajo creativo.</p>
+                <span class="badge">Ver catálogo</span>
+            </a>
+            <a href="eventos.php" class="card">
+                <div class="card-icon"></div>
+                <h3>Eventos</h3>
+                <p>Próximos eventos culturales y actividades artísticas.</p>
+                <span class="badge">Ver agenda</span>
+            </a>
+            <a href="galeria.php" class="card">
+                <div class="card-icon"></div>
+                <h3>Galería</h3>
+                <p>Exposiciones y galerías disponibles en el recinto.</p>
+                <span class="badge">Ver galería</span>
+            </a>
+            <a href="CC.html" class="card">
+                <div class="card-icon"></div>
+                <h3>Centro Cultural</h3>
+                <p>Información sobre el centro cultural y sus espacios.</p>
+                <span class="badge">Ver más</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('toggle');
+            const label = document.getElementById('theme-label');
+            
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                toggle.classList.remove('on');
+                label.textContent = '☀️ Modo claro';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                toggle.classList.add('on');
+                label.textContent = '🌙 Modo oscuro';
+            }
+            
+            // Guardar preferencia
+            localStorage.setItem('theme', html.getAttribute('data-theme'));
+        }
+
+        // Cargar preferencia guardada
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'light') {
+            document.getElementById('toggle').classList.remove('on');
+            document.getElementById('theme-label').textContent = '☀️ Modo claro';
+        }
+    </script>
+</body>
 </html>
