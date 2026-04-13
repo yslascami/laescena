@@ -1,0 +1,16 @@
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.gradle/
+build/
+local.properties
+
+# Mac
+.DS_Store
+
+# Credenciales
+.env
+*.jpg 
+fonts/ 
+imagenes/ 
+portafolio/ 
