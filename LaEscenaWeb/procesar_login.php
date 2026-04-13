@@ -46,7 +46,7 @@ if (mysqli_num_rows($result) > 0) {
 
     // Redirige según el rol
     if ($role == 'superadmin') {
-        header("Location: superadmin.html");
+        header("Location: panel_admin.php");
     } elseif ($role == 'artista') {
         header("Location: perfil.php");
     } elseif ($role == 'centrocultural') {

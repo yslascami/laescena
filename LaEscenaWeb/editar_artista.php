@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'centrocultural') {
+if (!isset($_SESSION['role']) || ($_SESSION['role'] != 'superadmin' && $_SESSION['role'] != 'centrocultural')) {
     header("Location: ing.html");
     exit();
 }
@@ -21,10 +21,7 @@ $id = intval($_GET['id']);
 
 // Procesar actualización
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
     $descripcion = $_POST['descripcion'];
-    $disciplina = $_POST['disciplina'];
 
     $foto_perfil = $_POST['foto_perfil_actual'];
     if (!empty($_FILES['foto_perfil']['name'])) {
@@ -42,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $foto_portada = 'imagenes/' . $nuevo_nombre;
     }
 
-    $sql = "UPDATE artistas SET nombre=?, correo=?, descripcion=?, disciplina=?, foto_perfil=?, foto_portada=? WHERE id=?";
+    $sql = "UPDATE artistas SET descripcion=?, foto_perfil=?, foto_portada=? WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssssssi", $nombre, $correo, $descripcion, $disciplina, $foto_perfil, $foto_portada, $id);
+    mysqli_stmt_bind_param($stmt, "sssi", $descripcion, $foto_perfil, $foto_portada, $id);
     mysqli_stmt_execute($stmt);
     $exito = true;
 }
@@ -155,6 +152,25 @@ $artista = mysqli_fetch_assoc($result);
             padding-bottom: 10px;
         }
 
+        .artista-info {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .artista-info h3 {
+            font-size: 18px;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .artista-info p {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
         .form-group {
             margin-bottom: 16px;
         }
@@ -168,9 +184,7 @@ $artista = mysqli_fetch_assoc($result);
             letter-spacing: 1px;
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid var(--border);
@@ -179,16 +193,14 @@ $artista = mysqli_fetch_assoc($result);
             color: var(--text);
             font-family: 'Jost', sans-serif;
             font-size: 14px;
+            height: 120px;
+            resize: vertical;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
         }
-
-        .form-group textarea { height: 100px; resize: vertical; }
 
         .btn-guardar {
             width: 100%;
@@ -226,11 +238,14 @@ $artista = mysqli_fetch_assoc($result);
         </div>
         <nav>
             <ul>
+                <?php if ($_SESSION['role'] == 'superadmin'): ?>
+                <li><a href="panel_admin.php">Panel Admin</a></li>
+                <?php else: ?>
                 <li><a href="panel_cc.php">Panel</a></li>
+                <?php endif; ?>
                 <li><a href="gestionar_artistas.php" class="active">Artistas</a></li>
                 <li><a href="gestionar_eventos.php">Eventos</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
-                <li><a href="galeria.php">Galería</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -252,6 +267,12 @@ $artista = mysqli_fetch_assoc($result);
         <form method="POST" enctype="multipart/form-data">
             <input type="hidden" name="foto_perfil_actual" value="<?= htmlspecialchars($artista['foto_perfil'] ?? '') ?>">
             <input type="hidden" name="foto_portada_actual" value="<?= htmlspecialchars($artista['foto_portada'] ?? '') ?>">
+
+            <!-- Info del artista (solo lectura) -->
+            <div class="artista-info">
+                <h3><?= htmlspecialchars($artista['nombre']) ?></h3>
+                <p>✉ <?= htmlspecialchars($artista['correo']) ?> | 🎨 <?= htmlspecialchars($artista['disciplina'] ?? 'Sin disciplina') ?></p>
+            </div>
 
             <!-- Fotos -->
             <div class="fotos-grid">
@@ -279,39 +300,13 @@ $artista = mysqli_fetch_assoc($result);
                 </div>
             </div>
 
-            <!-- Información -->
+            <!-- Solo descripción -->
             <div class="form-card">
-                <h2>Información del artista</h2>
-
-                <div class="form-group">
-                    <label>Nombre completo</label>
-                    <input type="text" name="nombre" value="<?= htmlspecialchars($artista['nombre']) ?>" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Correo electrónico</label>
-                    <input type="email" name="correo" value="<?= htmlspecialchars($artista['correo']) ?>" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Disciplina artística</label>
-                    <select name="disciplina">
-                        <option value="">Selecciona una disciplina</option>
-                        <?php
-                        $disciplinas = ['Pintura', 'Escultura', 'Fotografía', 'Música', 'Danza', 'Teatro', 'Literatura', 'Cine', 'Arte Digital', 'Otra'];
-                        foreach ($disciplinas as $d) {
-                            $selected = ($artista['disciplina'] == $d) ? 'selected' : '';
-                            echo "<option value='$d' $selected>$d</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-
+                <h2>Editar descripción</h2>
                 <div class="form-group">
                     <label>Descripción / Biografía</label>
                     <textarea name="descripcion"><?= htmlspecialchars($artista['descripcion'] ?? '') ?></textarea>
                 </div>
-
                 <button type="submit" class="btn-guardar">Guardar cambios</button>
             </div>
         </form>
