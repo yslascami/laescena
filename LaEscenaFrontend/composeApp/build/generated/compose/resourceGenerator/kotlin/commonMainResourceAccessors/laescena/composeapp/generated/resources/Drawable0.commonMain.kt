@@ -30,6 +30,9 @@ private object CommonMainDrawable0 {
   public val IMG_6790: DrawableResource by 
       lazy { init_IMG_6790() }
 
+  public val cc: DrawableResource by 
+      lazy { init_cc() }
+
   public val compose_multiplatform: DrawableResource by 
       lazy { init_compose_multiplatform() }
 
@@ -49,6 +52,7 @@ internal fun _collectCommonMainDrawable0Resources(map: MutableMap<String, Drawab
   map.put("IMG_6625_edited", CommonMainDrawable0.IMG_6625_edited)
   map.put("IMG_6633", CommonMainDrawable0.IMG_6633)
   map.put("IMG_6790", CommonMainDrawable0.IMG_6790)
+  map.put("cc", CommonMainDrawable0.cc)
   map.put("compose_multiplatform", CommonMainDrawable0.compose_multiplatform)
   map.put("con1", CommonMainDrawable0.con1)
   map.put("con2", CommonMainDrawable0.con2)
@@ -130,6 +134,17 @@ private fun init_IMG_6790(): DrawableResource = org.jetbrains.compose.resources.
     setOf(
       org.jetbrains.compose.resources.ResourceItem(setOf(),
     "composeResources/laescena.composeapp.generated.resources/drawable/IMG_6790.jpg", -1, -1),
+    )
+)
+
+internal val Res.drawable.cc: DrawableResource
+  get() = CommonMainDrawable0.cc
+
+private fun init_cc(): DrawableResource = org.jetbrains.compose.resources.DrawableResource(
+  "drawable:cc",
+    setOf(
+      org.jetbrains.compose.resources.ResourceItem(setOf(),
+    "composeResources/laescena.composeapp.generated.resources/drawable/cc.jpg", -1, -1),
     )
 )
 
