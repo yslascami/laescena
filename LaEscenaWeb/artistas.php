@@ -1,107 +1,254 @@
-<?php require_once 'database.php'; ?>
+
+<?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "laescena";
+$conn = mysqli_connect($host, $user, $password, $database);
+if (!$conn) die("Error de conexión: " . mysqli_connect_error());
+?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-    <title>Artistas - La Escena</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas - La Escena</title>
+    <link rel="stylesheet" href="estilos.css">
     <style>
-        body {
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
+        .page-header {
+            margin-bottom: 30px;
         }
-        header {
-            background-color: rgb(173, 102, 108);
-            color: black;
+
+        .page-header h1 {
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        .buscador-grid {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.buscador-input input,
+.buscador-select select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.buscador-input input:focus,
+.buscador-select select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.contador {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.artista-card.oculto {
+    display: none;
+}
+
+        .artistas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .artista-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .artista-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .artista-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-        }
-        nav {
-            background-color: rgb(107, 91, 92);
-            padding: 20px;
-        }
-        nav a {
+            font-size: 24px;
+            margin-bottom: 16px;
             color: white;
-            text-decoration: none;
-            margin-right: 15px;
-            font-family: verdana;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
         }
-        main {
-            padding: 30px;
+
+        .artista-card h3 {
+            font-size: 20px;
+            color: var(--text);
+            margin-bottom: 8px;
         }
-        .artista-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
+
+        .artista-card .info {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 4px;
         }
-        .artista-info h2 {
-            margin: 0 0 8px 0;
-            color: rgb(129, 52, 58);
+
+        .artista-card .badge {
+            margin-top: 16px;
         }
-        .artista-info p {
-            margin: 4px 0;
-            color: #555;
-        }
-        .badge {
-            background-color: rgb(173, 102, 108);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            display: inline-block;
-            margin-top: 8px;
-        }
+
         .no-artistas {
             text-align: center;
-            color: #888;
+            color: var(--text-secondary);
             font-size: 18px;
             margin-top: 40px;
+            grid-column: 1 / -1;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Catálogo de Artistas</h1>
-    </header>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="CC.html">Centro Cultural</a>
-        <a href="artistas.php">Artistas</a>
-        <a href="eve.html">Eventos</a>
-        <a href="gale.html">Galería</a>
-        <a href="Reg.html">Registro</a>
-        <a href="ing.html">Ingresar</a>
-    </nav>
-    <main>
-        <?php
-        $sql = "SELECT * FROM artistas";
-        $result = mysqli_query($conn, $sql);
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo La Escena">
+            <h2>La Escena</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="CC.html">Centro Cultural</a></li>
+                <li><a href="artistas.php" class="active">Artistas</a></li>
+                <li><a href="eventos.php">Eventos</a></li>
+                <li><a href="galeria.php">Galería</a></li>
+                <li><a href="Reg.html">Registro</a></li>
+                <li><a href="ing.html">Ingresar</a></li>
+            </ul>
+        </nav>
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-label">Modo oscuro</span>
+            <div class="toggle-switch on" id="toggle"></div>
+        </div>
+    </div>
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($artista = mysqli_fetch_assoc($result)) {
-                echo '
-                <div class="artista-card">
-                    <div class="artista-info">
-                        <h2>' . htmlspecialchars($artista['nombre']) . '</h2>
-                        <p>📧 ' . htmlspecialchars($artista['correo']) . '</p>
-                        <p>📞 ' . htmlspecialchars($artista['teléfono']) . '</p>
-                        <span class="badge">Artista</span>
-                    </div>
-                </div>';
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Catálogo de Artistas</h1>
+            <p>Conoce a los artistas que forman parte de La Escena</p>
+        </div>
+        <!-- Buscador -->
+<div class="buscador-grid">
+    <div class="buscador-input">
+        <input type="text" id="buscarNombre" placeholder="Buscar por nombre..." oninput="filtrarArtistas()">
+    </div>
+    <div class="buscador-select">
+        <select id="filtrarDisciplina" onchange="filtrarArtistas()">
+            <option value="">Todas las disciplinas</option>
+            <option value="Pintura">Pintura</option>
+            <option value="Escultura">Escultura</option>
+            <option value="Fotografía">Fotografía</option>
+            <option value="Música">Música</option>
+            <option value="Danza">Danza</option>
+            <option value="Teatro">Teatro</option>
+            <option value="Literatura">Literatura</option>
+            <option value="Cine">Cine</option>
+            <option value="Arte Digital">Arte Digital</option>
+            <option value="Otra">Otra</option>
+        </select>
+    </div>
+</div>
+<p class="contador" id="contador"></p>
+
+        <div class="artistas-grid">
+            <?php
+            $sql = "SELECT * FROM artistas";
+            $result = mysqli_query($conn, $sql);
+
+            if (mysqli_num_rows($result) > 0) {
+                while ($artista = mysqli_fetch_assoc($result)) {
+                    $inicial = strtoupper(mb_substr($artista['nombre'], 0, 1));
+                    echo '
+<div class="artista-card" data-nombre="' . strtolower($artista['nombre']) . '" data-disciplina="' . htmlspecialchars($artista['disciplina'] ?? '') . '">
+    <div class="artista-avatar">' . $inicial . '</div>
+    <h3>' . htmlspecialchars($artista['nombre']) . '</h3>
+    <p class="info"> ' . htmlspecialchars($artista['correo']) . '</p>
+    <p class="info"> ' . htmlspecialchars($artista['teléfono']) . '</p>
+    <span class="badge">' . htmlspecialchars($artista['disciplina'] ?? 'Artista') . '</span>
+</div>';
+                }
+            } else {
+                echo '<p class="no-artistas">No hay artistas registrados aún.</p>';
             }
-        } else {
-            echo '<p class="no-artistas">No hay artistas registrados aún.</p>';
-        }
+            mysqli_close($conn);
+            ?>
+        </div>
+    </div>
 
-        mysqli_close($conn);
-        ?>
-    </main>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('toggle');
+            const label = document.getElementById('theme-label');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                toggle.classList.remove('on');
+                label.textContent = 'Modo claro';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                toggle.classList.add('on');
+                label.textContent = 'Modo oscuro';
+            }
+            localStorage.setItem('theme', html.getAttribute('data-theme'));
+        }
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'light') {
+            document.getElementById('toggle').classList.remove('on');
+            document.getElementById('theme-label').textContent = 'Modo claro';
+        }
+    </script>
+    <script>
+    function filtrarArtistas() {
+        const nombre = document.getElementById('buscarNombre').value.toLowerCase();
+        const disciplina = document.getElementById('filtrarDisciplina').value;
+        const cards = document.querySelectorAll('.artista-card');
+        let visibles = 0;
+
+        cards.forEach(card => {
+            const nombreCard = card.getAttribute('data-nombre');
+            const disciplinaCard = card.getAttribute('data-disciplina');
+            const coincideNombre = nombreCard.includes(nombre);
+            const coincideDisciplina = disciplina === '' || disciplinaCard === disciplina;
+
+            if (coincideNombre && coincideDisciplina) {
+                card.classList.remove('oculto');
+                visibles++;
+            } else {
+                card.classList.add('oculto');
+            }
+        });
+
+        document.getElementById('contador').textContent = visibles + ' artista(s) encontrado(s)';
+    }
+
+    // Inicializar contador
+    filtrarArtistas();
+</script>
 </body>
 </html>
