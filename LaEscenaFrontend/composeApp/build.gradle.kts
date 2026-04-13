@@ -34,9 +34,9 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
             implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+            implementation("androidx.compose.material:material-icons-extended:1.6.0")
         }
         commonMain.dependencies {
-            implementation("androidx.compose.material:material-icons-extended:1.6.0")
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
