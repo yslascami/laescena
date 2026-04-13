@@ -29,6 +29,41 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
             font-size: 14px;
             margin-top: 6px;
         }
+        .buscador-grid {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.buscador-input input,
+.buscador-select select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.buscador-input input:focus,
+.buscador-select select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.contador {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.artista-card.oculto {
+    display: none;
+}
 
         .artistas-grid {
             display: grid;
@@ -117,6 +152,28 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
             <h1>Catálogo de Artistas</h1>
             <p>Conoce a los artistas que forman parte de La Escena</p>
         </div>
+        <!-- Buscador -->
+<div class="buscador-grid">
+    <div class="buscador-input">
+        <input type="text" id="buscarNombre" placeholder="Buscar por nombre..." oninput="filtrarArtistas()">
+    </div>
+    <div class="buscador-select">
+        <select id="filtrarDisciplina" onchange="filtrarArtistas()">
+            <option value="">Todas las disciplinas</option>
+            <option value="Pintura">Pintura</option>
+            <option value="Escultura">Escultura</option>
+            <option value="Fotografía">Fotografía</option>
+            <option value="Música">Música</option>
+            <option value="Danza">Danza</option>
+            <option value="Teatro">Teatro</option>
+            <option value="Literatura">Literatura</option>
+            <option value="Cine">Cine</option>
+            <option value="Arte Digital">Arte Digital</option>
+            <option value="Otra">Otra</option>
+        </select>
+    </div>
+</div>
+<p class="contador" id="contador"></p>
 
         <div class="artistas-grid">
             <?php
@@ -127,13 +184,13 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
                 while ($artista = mysqli_fetch_assoc($result)) {
                     $inicial = strtoupper(mb_substr($artista['nombre'], 0, 1));
                     echo '
-                    <div class="artista-card">
-                        <div class="artista-avatar">' . $inicial . '</div>
-                        <h3>' . htmlspecialchars($artista['nombre']) . '</h3>
-                        <p class="info">✉ ' . htmlspecialchars($artista['correo']) . '</p>
-                        <p class="info">☎ ' . htmlspecialchars($artista['teléfono']) . '</p>
-                        <span class="badge">Artista</span>
-                    </div>';
+<div class="artista-card" data-nombre="' . strtolower($artista['nombre']) . '" data-disciplina="' . htmlspecialchars($artista['disciplina'] ?? '') . '">
+    <div class="artista-avatar">' . $inicial . '</div>
+    <h3>' . htmlspecialchars($artista['nombre']) . '</h3>
+    <p class="info"> ' . htmlspecialchars($artista['correo']) . '</p>
+    <p class="info"> ' . htmlspecialchars($artista['teléfono']) . '</p>
+    <span class="badge">' . htmlspecialchars($artista['disciplina'] ?? 'Artista') . '</span>
+</div>';
                 }
             } else {
                 echo '<p class="no-artistas">No hay artistas registrados aún.</p>';
@@ -166,5 +223,32 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
             document.getElementById('theme-label').textContent = 'Modo claro';
         }
     </script>
+    <script>
+    function filtrarArtistas() {
+        const nombre = document.getElementById('buscarNombre').value.toLowerCase();
+        const disciplina = document.getElementById('filtrarDisciplina').value;
+        const cards = document.querySelectorAll('.artista-card');
+        let visibles = 0;
+
+        cards.forEach(card => {
+            const nombreCard = card.getAttribute('data-nombre');
+            const disciplinaCard = card.getAttribute('data-disciplina');
+            const coincideNombre = nombreCard.includes(nombre);
+            const coincideDisciplina = disciplina === '' || disciplinaCard === disciplina;
+
+            if (coincideNombre && coincideDisciplina) {
+                card.classList.remove('oculto');
+                visibles++;
+            } else {
+                card.classList.add('oculto');
+            }
+        });
+
+        document.getElementById('contador').textContent = visibles + ' artista(s) encontrado(s)';
+    }
+
+    // Inicializar contador
+    filtrarArtistas();
+</script>
 </body>
 </html>
