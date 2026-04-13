@@ -1,0 +1,23 @@
+CREATE DATABASE laescena;
+USE laescena;
+
+CREATE TABLE Administrador (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20)
+);
+
+CREATE TABLE Artista (
+    id_artista INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20)
+);
+INSERT INTO Administrador (nombre, correo, contrasena, telefono) 
+VALUES ('Ana', 'admin@correo.com', '123', '555-0101');
+
+INSERT INTO Artista (nombre, correo, contrasena, telefono) 
+VALUES ('Angel', 'angel@artista.com', '1234', '555-0202');
