@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -42,7 +43,31 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
             color: var(--text-secondary);
             font-size: 14px;
             line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .galeria-artista {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             margin-bottom: 24px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .galeria-artista a {
+            color: var(--primary);
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .galeria-artista a:hover {
+            border-bottom-color: var(--primary);
         }
 
         .fotos-grid {
@@ -96,13 +121,24 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="CC.html">Centro Cultural</a></li>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="CC.php">Centro Cultural</a></li>
                 <li><a href="artistas.php">Artistas</a></li>
                 <li><a href="eventos.php">Eventos</a></li>
                 <li><a href="galeria.php" class="active">Galería</a></li>
-                <li><a href="Reg.html">Registro</a></li>
-                <li><a href="ing.html">Ingresar</a></li>
+                <?php if (isset($_SESSION['role'])): ?>
+                    <?php if ($_SESSION['role'] == 'artista'): ?>
+                        <li><a href="perfil.php">Mi Perfil</a></li>
+                    <?php elseif ($_SESSION['role'] == 'centrocultural'): ?>
+                        <li><a href="panel_cc.php">Mi Panel</a></li>
+                    <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
+                        <li><a href="panel_admin.php">Panel Admin</a></li>
+                    <?php endif; ?>
+                    <li><a href="logout.php">Cerrar sesión</a></li>
+                <?php else: ?>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -127,6 +163,18 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
 
                 if (!empty($galeria['descripcion'])) {
                     echo '<p class="galeria-descripcion">' . htmlspecialchars($galeria['descripcion']) . '</p>';
+                }
+
+                // Mostrar artista como enlace si existe en la tabla artistas
+                if (!empty($galeria['artista'])) {
+                    $nombre_artista = mysqli_real_escape_string($conn, $galeria['artista']);
+                    $res_art = mysqli_query($conn, "SELECT id FROM artistas WHERE nombre = '$nombre_artista' LIMIT 1");
+                    $art_row = mysqli_fetch_assoc($res_art);
+                    if ($art_row) {
+                        echo '<p class="galeria-artista">Artista: <a href="ver_artista.php?id=' . $art_row['id'] . '">' . htmlspecialchars($galeria['artista']) . '</a></p>';
+                    } else {
+                        echo '<p class="galeria-artista">Artista: <span>' . htmlspecialchars($galeria['artista']) . '</span></p>';
+                    }
                 }
 
                 $titulo = mysqli_real_escape_string($conn, $galeria['titulo']);

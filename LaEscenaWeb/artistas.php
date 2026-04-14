@@ -1,5 +1,10 @@
 
 <?php
+session_start();
+// Creamos una variable booleana para saber si es admin
+$es_admin = (isset($_SESSION['role']) && $_SESSION['role'] === 'superadmin');
+?>
+<?php
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -132,13 +137,24 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="CC.html">Centro Cultural</a></li>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="CC.php">Centro Cultural</a></li>
                 <li><a href="artistas.php" class="active">Artistas</a></li>
                 <li><a href="eventos.php">Eventos</a></li>
                 <li><a href="galeria.php">Galería</a></li>
-                <li><a href="Reg.html">Registro</a></li>
-                <li><a href="ing.html">Ingresar</a></li>
+                <?php if (isset($_SESSION['role'])): ?>
+                    <?php if ($_SESSION['role'] == 'artista'): ?>
+                        <li><a href="perfil.php">Mi Perfil</a></li>
+                    <?php elseif ($_SESSION['role'] == 'centrocultural'): ?>
+                        <li><a href="panel_cc.php">Mi Panel</a></li>
+                    <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
+                        <li><a href="panel_admin.php">Panel Admin</a></li>
+                    <?php endif; ?>
+                    <li><a href="logout.php">Cerrar sesión</a></li>
+                <?php else: ?>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -184,13 +200,12 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
                 while ($artista = mysqli_fetch_assoc($result)) {
                     $inicial = strtoupper(mb_substr($artista['nombre'], 0, 1));
                     echo '
-<div class="artista-card" data-nombre="' . strtolower($artista['nombre']) . '" data-disciplina="' . htmlspecialchars($artista['disciplina'] ?? '') . '">
+<a href="ver_artista.php?id=' . $artista['id'] . '" class="artista-card" data-nombre="' . strtolower($artista['nombre']) . '" data-disciplina="' . htmlspecialchars($artista['disciplina'] ?? '') . '" style="text-decoration:none; color:inherit; display:block;">
     <div class="artista-avatar">' . $inicial . '</div>
     <h3>' . htmlspecialchars($artista['nombre']) . '</h3>
-    <p class="info"> ' . htmlspecialchars($artista['correo']) . '</p>
-    <p class="info"> ' . htmlspecialchars($artista['teléfono']) . '</p>
-    <span class="badge">' . htmlspecialchars($artista['disciplina'] ?? 'Artista') . '</span>
-</div>';
+    <p class="info"> ' . htmlspecialchars($artista['disciplina'] ?? 'Artista') . '</p>
+    <span class="badge">Ver perfil →</span>
+</a>';
                 }
             } else {
                 echo '<p class="no-artistas">No hay artistas registrados aún.</p>';

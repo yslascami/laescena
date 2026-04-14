@@ -1,4 +1,5 @@
 <?php
+session_start();
 $host = "localhost";
 $user = "root";
 $password = "";
@@ -113,13 +114,24 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="CC.html">Centro Cultural</a></li>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="CC.php">Centro Cultural</a></li>
                 <li><a href="artistas.php">Artistas</a></li>
                 <li><a href="eventos.php" class="active">Eventos</a></li>
                 <li><a href="galeria.php">Galería</a></li>
-                <li><a href="Reg.html">Registro</a></li>
-                <li><a href="ing.html">Ingresar</a></li>
+                <?php if (isset($_SESSION['role'])): ?>
+                    <?php if ($_SESSION['role'] == 'artista'): ?>
+                        <li><a href="perfil.php">Mi Perfil</a></li>
+                    <?php elseif ($_SESSION['role'] == 'centrocultural'): ?>
+                        <li><a href="panel_cc.php">Mi Panel</a></li>
+                    <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
+                        <li><a href="panel_admin.php">Panel Admin</a></li>
+                    <?php endif; ?>
+                    <li><a href="logout.php">Cerrar sesión</a></li>
+                <?php else: ?>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">

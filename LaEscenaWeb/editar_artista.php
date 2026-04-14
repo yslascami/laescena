@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['role']) || ($_SESSION['role'] != 'superadmin' && $_SESSION['role'] != 'centrocultural')) {
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'superadmin') {
     header("Location: ing.html");
     exit();
 }
@@ -238,14 +238,10 @@ $artista = mysqli_fetch_assoc($result);
         </div>
         <nav>
             <ul>
-                <?php if ($_SESSION['role'] == 'superadmin'): ?>
                 <li><a href="panel_admin.php">Panel Admin</a></li>
-                <?php else: ?>
-                <li><a href="panel_cc.php">Panel</a></li>
-                <?php endif; ?>
                 <li><a href="gestionar_artistas.php" class="active">Artistas</a></li>
-                <li><a href="gestionar_eventos.php">Eventos</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
+                <li><a href="galeria.php">Galería</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
