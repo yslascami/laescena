@@ -1,6 +1,5 @@
 package org.example.project
 
-<<<<<<< HEAD
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
@@ -15,10 +14,9 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 
-=======
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Devices
->>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
+
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -106,14 +104,14 @@ fun AppNavigation() {
         composable("superadmin") { SuperAdminScreen() }
         composable("artist") { ArtistScreen() }
         composable("centrocultural") { CentroCulturalScreen() }
-<<<<<<< HEAD
+
         composable("agenda") { AgendaScreen() }
-=======
+
 
         // Rutas de pantallas
         composable("eventos") { EventosScreen() }
         composable("galerias") { GaleriaScreen() }
->>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
+
     }
 }
 
@@ -137,7 +135,7 @@ fun HomeScreen(navController: NavController) {
             .fillMaxSize()
             .background(ColorFondo)
     ) {
-<<<<<<< HEAD
+
         // Header
         Row(
             modifier = Modifier
@@ -145,8 +143,8 @@ fun HomeScreen(navController: NavController) {
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-=======
-        Text(
+
+            Text(
             text = "Bienvenido a La Escena",
             style = MaterialTheme.typography.headlineMedium
         )
@@ -163,7 +161,7 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = { navController.navigate("register") }
->>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
+
         ) {
             Text(
                 text = "La Escena",
@@ -340,10 +338,9 @@ fun HomeScreen(navController: NavController) {
         }
     }
 }
-<<<<<<< HEAD
-=======
+
 @Preview
->>>>>>> e3709109f9c8c123c8a3a8383066049090c3dd10
+
 @Composable
 fun SuperAdminScreen() {
     Column(

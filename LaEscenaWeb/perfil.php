@@ -12,6 +12,18 @@ $password = "";
 $database = "laescena";
 $conn = mysqli_connect($host, $user, $password, $database);
 
+// Verificar si el artista está aprobado
+$id_check = $_SESSION['artista_id'];
+$sql_aprobado = "SELECT aprobado FROM artistas WHERE id = $id_check";
+$result_aprobado = mysqli_query($conn, $sql_aprobado);
+$check = mysqli_fetch_assoc($result_aprobado);
+
+if (!$check || $check['aprobado'] != 1) {
+    header("Location: pendiente.php");
+    exit();
+}
+
+
 // Procesar actualización
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_SESSION['artista_id'];
@@ -272,12 +284,14 @@ $artista = mysqli_fetch_assoc($result);
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="CC.html">Centro Cultural</a></li>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="CC.php">Centro Cultural</a></li>
                 <li><a href="artistas.php">Artistas</a></li>
                 <li><a href="eventos.php">Eventos</a></li>
                 <li><a href="galeria.php">Galería</a></li>
                 <li><a href="perfil.php" class="active">Mi Perfil</a></li>
+                <li><a href="portafolio.php">Mi Portafolio</a></li>
+                <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
