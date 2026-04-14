@@ -21,3 +21,21 @@ data class RegisterRequest(
     val password: String,
     val role: String
 )
+
+@Serializable
+data class Evento(
+    val id: Int,
+    val nombre: String,
+    val descripcion: String,
+    val fecha: String,
+    val lugar: String,
+    val imagen_url: String? = null
+)
+
+@Serializable
+data class Galeria(
+    val id: Int,
+    val nombre: String,
+    val artista_id: Int,
+    val imagen_url: String
+)
