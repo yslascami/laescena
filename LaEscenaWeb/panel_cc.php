@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'centrocultural') {
-    header("Location: ing.html");
+    header("Location: ing.php");
     exit();
 }
 
@@ -144,10 +144,11 @@ $total_pendientes = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM artistas
         <nav>
             <ul>
                 <li><a href="panel_cc.php" class="active">Panel</a></li>
-                <li><a href="gestionar_artistas.php">Artistas</a></li>
                 <li><a href="gestionar_eventos.php">Eventos</a></li>
+                <li><a href="gestionar_galerias.php">Galerías</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
-                <li><a href="galeria.php">Galería</a></li>
+                <li><a href="galeria.php">Ver galería</a></li>
+                <li><a href="mensajes.php">Mensajes</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -181,15 +182,15 @@ $total_pendientes = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM artistas
         <!-- Acciones -->
         <h2 class="seccion-titulo">Acciones</h2>
         <div class="acciones-grid">
-            <a href="gestionar_artistas.php" class="accion-card">
-                <div class="icono"></div>
-                <h3>Gestionar Artistas</h3>
-                <p>Aprueba perfiles, edita información y gestiona el catálogo de artistas.</p>
-            </a>
             <a href="gestionar_eventos.php" class="accion-card">
                 <div class="icono"></div>
                 <h3>Gestionar Eventos</h3>
                 <p>Crea, edita y elimina eventos culturales.</p>
+            </a>
+            <a href="gestionar_galerias.php" class="accion-card">
+                <div class="icono"></div>
+                <h3>Gestionar Galerías</h3>
+                <p>Crea galerías, sube fotos y gestiona las exposiciones.</p>
             </a>
             <a href="galeria.php" class="accion-card">
                 <div class="icono"></div>

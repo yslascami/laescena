@@ -10,3 +10,7 @@ local.properties
 
 # Credenciales
 .env
+*.jpg 
+fonts/ 
+imagenes/ 
+portafolio/ 

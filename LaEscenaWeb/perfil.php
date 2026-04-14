@@ -291,6 +291,7 @@ $artista = mysqli_fetch_assoc($result);
                 <li><a href="galeria.php">Galería</a></li>
                 <li><a href="perfil.php" class="active">Mi Perfil</a></li>
                 <li><a href="portafolio.php">Mi Portafolio</a></li>
+                <li><a href="mensajes.php">Mensajes</a></li>
                 <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>

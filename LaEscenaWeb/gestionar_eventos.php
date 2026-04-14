@@ -266,10 +266,10 @@ $artistas = mysqli_query($conn, "SELECT nombre FROM artistas WHERE aprobado = 1 
         <nav>
             <ul>
                 <li><a href="panel_cc.php">Panel</a></li>
-                <li><a href="gestionar_artistas.php">Artistas</a></li>
                 <li><a href="gestionar_eventos.php" class="active">Eventos</a></li>
+                <li><a href="gestionar_galerias.php">Galerías</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
-                <li><a href="galeria.php">Galería</a></li>
+                <li><a href="galeria.php">Ver galería</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">

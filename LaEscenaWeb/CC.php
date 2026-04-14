@@ -124,8 +124,8 @@
                     <?php endif; ?>
                     <li><a href="logout.php">Cerrar sesión</a></li>
                 <?php else: ?>
-                    <li><a href="Reg.html">Registro</a></li>
-                    <li><a href="ing.html">Ingresar</a></li>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -138,33 +138,27 @@
     <div class="main-content">
         <div class="page-header">
             <h1>Centro Cultural</h1>
-            <p>Espacio dedicado a la promoción y difusión de la cultura local</p>
+            
         </div>
 
         <div class="hero-cc">
-            <h2>Centro Cultural Ricardo Garibay</h2>
-            <p>Un espacio dedicado a la promoción y difusión de la cultura local, ofreciendo eventos artísticos, exposiciones y talleres para toda la comunidad.</p>
-        </div>
+    <h2>Centro Cultural Ricardo Garibay</h2>
+    <p>Un espacio dedicado a la promoción y difusión de la cultura local, ofreciendo eventos artísticos, exposiciones y talleres para toda la comunidad.</p>
+    <a href="https://sic.cultura.gob.mx/ficha.php?table=centro_cultural&table_id=442" 
+       target="_blank" class="btn-primary" style="margin-top: 20px; display: inline-block;">
+        Ver sitio oficial ↗
+    </a>
+</div>
 
         <div class="info-grid">
             <div class="info-card">
-                <h3>Nuestra Misión</h3>
-                <p>Promover y difundir la cultura y el arte en nuestra comunidad, brindando espacios para la expresión creativa y el intercambio cultural.</p>
-            </div>
-            <div class="info-card">
                 <h3>Ubicación</h3>
-                <p>Ubicado en el corazón de la ciudad, somos un punto de encuentro para artistas, escritores y amantes de la cultura.</p>
+                <p>Ubicado en el corazón de la ciudad, un punto de encuentro para artistas y amantes de la cultura.</p>
             </div>
             <div class="info-card">
                 <h3>Actividades</h3>
                 <p>Ofrecemos eventos artísticos, exposiciones, talleres y actividades culturales durante todo el año.</p>
             </div>
-        </div>
-
-        <h2 class="seccion-titulo">Acerca del Centro</h2>
-        <div class="descripcion">
-            <p>El Centro Cultural Ricardo Garibay es un espacio dedicado a la promoción y difusión de la cultura local, ofreciendo eventos artísticos, exposiciones y talleres.</p>
-            <p>Ubicado en el corazón de la ciudad, el centro cultural se ha convertido en un punto de encuentro para artistas, escritores y amantes de la cultura, brindando un espacio para la expresión creativa y el intercambio cultural.</p>
         </div>
     </div>
 

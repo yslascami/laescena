@@ -414,16 +414,18 @@ function iconoTipo($tipo, $ext = '') {
             <h2>La Escena</h2>
         </div>
         <nav>
-            <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="artistas.php">Artistas</a></li>
-                <li><a href="eventos.php">Eventos</a></li>
-                <li><a href="galeria.php">Galería</a></li>
-                <li><a href="perfil.php">Mi Perfil</a></li>
-                <li><a href="portafolio.php" class="active">Mi Portafolio</a></li>
-                <li><a href="logout.php">Cerrar sesión</a></li>
-            </ul>
-        </nav>
+    <ul>
+        <li><a href="index.php">Inicio</a></li>
+        <li><a href="CC.php">Centro Cultural</a></li>
+        <li><a href="artistas.php">Artistas</a></li>
+        <li><a href="eventos.php">Eventos</a></li>
+        <li><a href="galeria.php">Galería</a></li>
+        <li><a href="perfil.php">Mi Perfil</a></li>
+        <li><a href="portafolio.php" class="active">Mi Portafolio</a></li>
+        <li><a href="mensajes.php">Mensajes</a></li>
+        <li><a href="logout.php">Cerrar sesión</a></li>
+    </ul>
+</nav>
         <div class="theme-toggle" onclick="toggleTheme()">
             <span id="theme-label">Modo oscuro</span>
             <div class="toggle-switch on" id="toggle"></div>
