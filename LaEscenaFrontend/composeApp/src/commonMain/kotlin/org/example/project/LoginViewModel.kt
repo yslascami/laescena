@@ -21,6 +21,9 @@ class LoginViewModel : ViewModel() {
     private val _userRole = MutableStateFlow<String>("")
     val userRole: StateFlow<String> get() = _userRole
 
+    private val _userId = MutableStateFlow<Int?>(null)
+    val userId: StateFlow<Int?> get() = _userId
+
     fun login(email: String, password: String) {
         viewModelScope.launch {
             _loginResult.value = "Cargando..."
@@ -28,6 +31,7 @@ class LoginViewModel : ViewModel() {
             _loginResult.value = response.message
 
             if (response.success) {
+                _userId.value = response.id
                 val roleFromApi = response.role?.lowercase() ?: ""
                 _userRole.value = when {
                     roleFromApi.contains("admin") -> "superadmin"

@@ -61,6 +61,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val loginViewModel: LoginViewModel = viewModel { LoginViewModel() }
+    val userId by loginViewModel.userId.collectAsState()
 
     NavHost(
         navController = navController,
@@ -72,9 +74,8 @@ fun AppNavigation() {
 
         composable("login") {
             LoginScreen(
-
+                viewModel = loginViewModel,
                 onLoginSuccess = { role ->
-
                     val destino = when (role) {
                         "centrocultural" -> "centroculturaldashboard"
                         "artist" -> "artistdashboard"
@@ -120,12 +121,17 @@ fun AppNavigation() {
             PublicArtistProfileScreen(id, navController)
         }
 
-        //rutitas del perfil de artistas
+        // Dashboard Artista
         composable("artistdashboard") { ArtistScreen(navController) }
         composable("artist_profile") { ArtistProfileScreen(navController) }
         composable("artist_events") { ArtistEventsScreen(navController) }
         composable("artist_messages") { ArtistMessagesScreen(navController) }
-        composable("artist_portfolio") { ArtistPortfolioScreen(navController) }
+        
+        // AQUÍ ESTÁ EL CAMBIO: El portafolio ahora usa el ID real del usuario logueado
+        composable("artist_portfolio") { 
+            ArtistPortfolioScreen(navController, artistaId = userId ?: 0) 
+        }
+        
         composable("artist_portfolio_form") { ArtistPortfolioFormScreen(navController) }
     }
 }
@@ -606,215 +612,6 @@ fun RegisterScreen(
     }
 }
 
-@Preview
-@Composable
-fun EventosScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal=38.dp)
-            .verticalScroll(rememberScrollState()), // Habilita el scroll vertical
-        verticalArrangement = Arrangement.Top, // Alinea al inicio para que el contenido fluya hacia abajo
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(38.dp)) // Espacio superior
-        Text(text = "Eventos en existencia", style = MaterialTheme.typography.headlineLarge)
-        Spacer(modifier = Modifier.height(38.dp))
-
-
-        //Imagenes
-        Text(text="Anper Bajo el radar",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Left,
-            style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(10.dp))
-        Image(
-            painter = painterResource(Res.drawable.con1),
-            contentDescription = "Anper Bajo el radar",
-            modifier = Modifier.size(300.dp) // Ajusta el tamaño según necesites
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Anper en vivo desde el centro cultural Ricardo Garibay el 25 de " +
-                "marzo del 2026, ven y celebra el Punk/Rock 2000ero para cantar, bailar" +
-                " y llorar al máximo con esta banda, recibe la primavera como si fuera 2005" +
-                " y vinieras de ver la pelea de emos vs Punks con tus converse sucios.",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Left,
-            style = MaterialTheme.typography.bodyMedium)
-
-        Spacer(modifier = Modifier.height(38.dp))
-
-        Text(text="¿Quién es ese pxndjx y por qué tiene un concierto?",
-            modifier = Modifier.fillMaxWidth(),
-            style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(10.dp))
-        Image(
-            painter = painterResource(Res.drawable.con2),
-            contentDescription = "El pendejo en vivo",
-            modifier = Modifier.size(300.dp) )// Ajusta el tamaño según necesites
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "¿Alguna vez te has sentido lo suficientemente mal por ver" +
-                " como alguien a quien nadie conoce esta logrando los sueños que" +
-                " tu tenias de pequeño? Gerardo Bracho también, por eso mismo este artista" +
-                " emergente de la ciudad de Pachuca Hidalgo trae a nosotros su proyecto como" +
-                " solista prometiendo una noche Bohemia el dia 23 de abril del 2026.",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Left,
-            style = MaterialTheme.typography.bodyMedium)
-
-        Spacer(modifier = Modifier.height(38.dp)) // Espacio final
-    }
-}
-
-@Preview
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun GaleriaScreen() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Galerias disponibles") }
-
-            )
-        }) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 38.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(20.dp))
-
-            //Titulo de la galeria
-            Text(
-                text = "Souvenir",
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-
-            //Imagenes
-
-            @Composable
-            fun GaleriaPic(titulo: String, imagen: Painter) {
-                Column {
-                    Text(
-                        text = titulo,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Image(
-                        painter = imagen,
-                        contentDescription = titulo,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-
-            GaleriaPic("Recuerdo borroso", painterResource(Res.drawable.IMG_3474))
-            Spacer(modifier = Modifier.height(8.dp))
-            GaleriaPic("Me entiende más un caballo", painterResource(Res.drawable.IMG_4263))
-            Spacer(modifier = Modifier.height(8.dp))
-            GaleriaPic("m3m0r14z", painterResource(Res.drawable.IMG_6064_edited))
-            Spacer(modifier = Modifier.height(38.dp))
-            GaleriaPic("tres viajes más y se  acaba", painterResource(Res.drawable.IMG_6194))
-            Spacer(modifier = Modifier.height(8.dp))
-            GaleriaPic("¿Con todo?", painterResource(Res.drawable.IMG_6625_edited))
-            Spacer(modifier = Modifier.height(8.dp))
-            GaleriaPic("¿Con chile del que pica?", painterResource(Res.drawable.IMG_6633))
-            Spacer(modifier = Modifier.height(8.dp))
-            GaleriaPic("50 X persona", painterResource(Res.drawable.IMG_6790))
-            Spacer(modifier = Modifier.height(8.dp))
-
-        }
-    }
-}
-    @Composable
-    fun CentroCulturalScreen() {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Image(
-                painter = painterResource(Res.drawable.cc),
-                contentDescription = "Centro Cultural Ricardo Garibay",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp)
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "Centro cultural Ricardo Garibay",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF212121),
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = "El centro cultural Ricardo Garibay es un espacio dedicado a la promoción y difusión de " +
-                        "la cultura local, ofreciendo eventos artísticos, exposiciones y talleres.\n" +
-                        "\n" +
-                        "Ubicado en el corazón de la ciudad, el centro cultural se ha convertido en un punto de encuentro para " +
-                        "artistas, escritores y amantes de la cultura, brindando un espacio para la expresión creativa y el intercambio " +
-                        "cultural.",
-                fontSize = 15.sp,
-                color = Color(0xFF212121),
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CentroCulturalDashboardScreen(navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Centro Cultural", color = ColorPrimario, fontWeight = FontWeight.Bold) },
-                actions = {
-                    IconButton(onClick = { navController.navigate("home") { popUpTo(0) } }) {
-                        Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Cerrar Sesión", tint = ColorPrimario)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = ColorFondo)
-            )
-        },
-        containerColor = ColorFondo
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-        ) {
-            Text(text = "Gestión del centro cultural", color = ColorTextoSecundario)
-            Spacer(modifier = Modifier.height(20.dp))
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                item { DashboardCard("Panel", onClick = { /* Panel */ }) }
-                item { DashboardCard("Eventos", onClick = { navController.navigate("eventos") }) }
-                item { DashboardCard("Galeria", onClick = { navController.navigate("galerias") }) }
-                item { DashboardCard("Ver catálogo", onClick = { navController.navigate("catalogo") }) }
-                item { DashboardCard("Ver galería", onClick = { navController.navigate("galerias") }) }
-            }
-        }
-    }
-}
-
 @Composable
 fun DashboardCard(titulo: String, onClick: () -> Unit = {}) {
     Card(
@@ -1158,49 +955,6 @@ fun ArtistMessagesScreen(navController: NavController) {
                     colors = ButtonDefaults.buttonColors(containerColor = ColorPrimario)
                 ) {
                     Text("Enviar", color = Color.White)
-                }
-            }
-        }
-    }
-}
-
-data class PortafolioItem(val disciplina: String, val portada: String)
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ArtistPortfolioScreen(navController: NavController) {
-    val portafolios = remember { mutableStateListOf(
-        PortafolioItem("Música", "con1"),
-        PortafolioItem("Pintura", "cc")
-    ) }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Mi Portafolio", color = ColorTexto) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Atrás", tint = ColorTexto)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = ColorSuperficie)
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("artist_portfolio_form") }, containerColor = ColorPrimario) {
-                Icon(Icons.Default.Add, contentDescription = "Agregar", tint = Color.White)
-            }
-        },
-        containerColor = ColorFondo
-    ) { padding ->
-        LazyColumn(modifier = Modifier.padding(padding).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            items(portafolios) { p ->
-                Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = ColorSuperficie)) {
-                    Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Box(modifier = Modifier.size(60.dp).background(ColorPrimario, RoundedCornerShape(8.dp)))
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Text(p.disciplina, fontWeight = FontWeight.Bold, color = ColorTexto)
-                    }
                 }
             }
         }

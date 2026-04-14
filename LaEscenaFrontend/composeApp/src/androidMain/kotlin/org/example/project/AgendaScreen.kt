@@ -19,20 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-data class Evento(
-    val titulo: String,
-    val artista: String,
-    val fecha: String,
-    val hora: String,
-    val lugar: String,
-    val categoria: String
-)
-
 val eventosEjemplo = listOf(
-    Evento("Exposición de Arte Contemporáneo", "María González", "15 Mar 2026", "18:00", "Centro Cultural", "Pintura"),
-    Evento("Performance en Vivo", "Carlos Ruiz", "20 Mar 2026", "20:00", "Centro Cultural", "Performance"),
-    Evento("Instalación Interactiva", "Ana Martínez", "25 Mar 2026", "17:00", "Centro Cultural", "Instalación"),
-    Evento("Concierto de Jazz", "Luis Torres", "28 Mar 2026", "19:00", "Centro Cultural", "Música"),
+    Evento(titulo = "Exposición de Arte Contemporáneo", artista = "María González", fecha = "15 Mar 2026", hora = "18:00", lugar = "Centro Cultural", categoria = "Pintura"),
+    Evento(titulo = "Performance en Vivo", artista = "Carlos Ruiz", fecha = "20 Mar 2026", hora = "20:00", lugar = "Centro Cultural", categoria = "Performance"),
+    Evento(titulo = "Instalación Interactiva", artista = "Ana Martínez", fecha = "25 Mar 2026", hora = "17:00", lugar = "Centro Cultural", categoria = "Instalación"),
+    Evento(titulo = "Concierto de Jazz", artista = "Luis Torres", fecha = "28 Mar 2026", hora = "19:00", lugar = "Centro Cultural", categoria = "Música"),
 )
 
 @Composable
