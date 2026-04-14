@@ -25,34 +25,34 @@ if (mysqli_num_rows($result) > 0) {
     $user = mysqli_fetch_assoc($result);
     $role = $user['role'];
 
-    // Guardar sesión
     $_SESSION['email'] = $user['email'];
     $_SESSION['role'] = $role;
 
-    // Buscar datos del artista si es artista
     if ($role == 'artista') {
-        $email = $user['email'];
-        $sql2 = "SELECT * FROM artistas WHERE correo = ?";
-        $stmt2 = mysqli_prepare($conn, $sql2);
-        mysqli_stmt_bind_param($stmt2, "s", $email);
-        mysqli_stmt_execute($stmt2);
-        $result2 = mysqli_stmt_get_result($stmt2);
-        if (mysqli_num_rows($result2) > 0) {
-            $artista = mysqli_fetch_assoc($result2);
-            $_SESSION['artista_id'] = $artista['id'];
-            $_SESSION['artista_nombre'] = $artista['nombre'];
-        }
-    }
+        $email_artista = $user['email'];
+        $sql_check = "SELECT aprobado, id, nombre FROM artistas WHERE correo = ?";
+        $stmt_check = mysqli_prepare($conn, $sql_check);
+        mysqli_stmt_bind_param($stmt_check, "s", $email_artista);
+        mysqli_stmt_execute($stmt_check);
+        $result_check = mysqli_stmt_get_result($stmt_check);
+        $artista_check = mysqli_fetch_assoc($result_check);
 
-    // Redirige según el rol
-    if ($role == 'superadmin') {
+        if ($artista_check) {
+            $_SESSION['artista_id'] = $artista_check['id'];
+            $_SESSION['artista_nombre'] = $artista_check['nombre'];
+        }
+
+        if ($artista_check && $artista_check['aprobado'] == 1) {
+            header("Location: perfil.php");
+        } else {
+            header("Location: pendiente.php");
+        }
+    } elseif ($role == 'superadmin') {
         header("Location: panel_admin.php");
-    } elseif ($role == 'artista') {
-        header("Location: perfil.php");
     } elseif ($role == 'centrocultural') {
         header("Location: panel_cc.php");
     } else {
-        header("Location: index.php");
+        header("Location: index.html");
     }
     exit();
 } else {

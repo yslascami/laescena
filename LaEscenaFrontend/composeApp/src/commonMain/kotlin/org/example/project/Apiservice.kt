@@ -49,7 +49,7 @@ class Apiservice {
         }
     }
 
-    private val baseUrl = "http://10.222.169.1:8080"
+    private val baseUrl = "https://laescena-production-5298.up.railway.app" 
 
     suspend fun loginUsuario(email: String, password: String): CommonResponse {
         return try {
@@ -105,8 +105,4 @@ class Apiservice {
             } else {
                 CommonResponse(success = false, message = "Error: ${response.status.description}")
             }
-        } catch (e: Exception) {
-            CommonResponse(success = false, message = "Error de conexión: ${e.message ?: "Error desconocido"}")
-        }
-    }
-}
+        } ca

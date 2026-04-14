@@ -136,8 +136,8 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
                     <?php endif; ?>
                     <li><a href="logout.php">Cerrar sesión</a></li>
                 <?php else: ?>
-                    <li><a href="Reg.html">Registro</a></li>
-                    <li><a href="ing.html">Ingresar</a></li>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

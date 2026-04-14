@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'centrocultural') {
-    header("Location: ing.html");
+    header("Location: ing.php");
     exit();
 }
 
@@ -148,6 +148,7 @@ $total_pendientes = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM artistas
                 <li><a href="gestionar_galerias.php">Galerías</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
                 <li><a href="galeria.php">Ver galería</a></li>
+                <li><a href="mensajes.php">Mensajes</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">

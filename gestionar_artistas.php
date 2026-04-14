@@ -296,9 +296,9 @@ while ($artista = mysqli_fetch_assoc($result)) {
                 <span class="estado-badge aprobado">Aprobado</span>
                 <h3><?= htmlspecialchars($artista['nombre']) ?></h3>
                 <p class="detalle"><?= htmlspecialchars($artista['disciplina'] ?? 'Sin disciplina') ?></p>
-                <p class="contacto">✉ <?= htmlspecialchars($artista['correo']) ?></p>
+                <p class="contacto"> <?= htmlspecialchars($artista['correo']) ?></p>
                 <?php if (!empty($artista['teléfono'])): ?>
-                <p class="contacto">☎ <?= htmlspecialchars($artista['teléfono']) ?></p>
+                <p class="contacto"> <?= htmlspecialchars($artista['teléfono']) ?></p>
                 <?php endif; ?>
             </div>
             <div class="acciones">
