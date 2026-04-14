@@ -1,6 +1,6 @@
 FROM gradle:8.9-jdk21 AS build
 WORKDIR /app
-COPY . .
+COPY LaEscenaBackendKTOR/ .
 RUN gradle buildFatJar --no-daemon
 
 FROM eclipse-temurin:21-jre
