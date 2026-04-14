@@ -14,7 +14,12 @@ repositories {
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
 }
-
+// ← AGREGAR ESTO
+ktor {
+    fatJar {
+        archiveFileName.set("app.jar")
+    }
+}
 kotlin {
     jvmToolchain(21)
 }
@@ -26,7 +31,6 @@ dependencies {
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.server.default.headers)
     implementation(libs.ktor.server.call.logging)
-    implementation(libs.ktor.server.config.yaml)
     
     // Serialización JSON (Necesaria para comunicarse con la App móvil)
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")

@@ -17,9 +17,10 @@ data class LoginResponse(
 
 @Serializable
 data class RegisterRequest(
+    val nombre: String,
     val email: String,
     val password: String,
-    val role: String
+    val role: String= "artista"
 )
 
 @Serializable

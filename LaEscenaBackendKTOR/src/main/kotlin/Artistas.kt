@@ -8,6 +8,7 @@ object Artistas : Table("artistas") {
     val correo     = varchar("correo", 255)
     val contrasena = varchar("contraseña", 255)
     val telefono   = varchar("teléfono", 20)
+    val aprobado = integer("aprobado").default(0)
 
     override val primaryKey = PrimaryKey(id)
 }
