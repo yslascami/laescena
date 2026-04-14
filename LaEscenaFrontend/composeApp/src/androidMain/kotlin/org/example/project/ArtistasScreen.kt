@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ArtistasScreen(
+    onArtistClick: (String) -> Unit = {},
     viewModel: ArtistasViewModel = viewModel { ArtistasViewModel() }
 ) {
     val artistas by viewModel.artistas.collectAsState()
@@ -47,7 +48,8 @@ fun ArtistasScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp)
+                                .padding(vertical = 4.dp),
+                            onClick = { onArtistClick(artista.nombre) }
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(text = artista.nombre, style = MaterialTheme.typography.titleMedium)
