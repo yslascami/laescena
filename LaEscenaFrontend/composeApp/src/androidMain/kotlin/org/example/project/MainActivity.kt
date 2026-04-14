@@ -1,5 +1,6 @@
 package org.example.project
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
@@ -13,10 +14,8 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
-
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Devices
-
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -39,7 +38,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.resources.painterResource
 import laescena.composeapp.generated.resources.Res
-import androidx.compose.ui.text.font.FontWeight
 // Agrega esta línea con el nombre de tu imagen
 import laescena.composeapp.generated.resources.con1
 // Agrega esta línea con el nombre de tu imagen
@@ -51,6 +49,7 @@ import laescena.composeapp.generated.resources.IMG_6194
 import laescena.composeapp.generated.resources.IMG_6625_edited
 import laescena.composeapp.generated.resources.IMG_6633
 import laescena.composeapp.generated.resources.IMG_6790
+import laescena.composeapp.generated.resources.cc
 import laescena.composeapp.generated.resources.compose_multiplatform
 
 class MainActivity : ComponentActivity() {
@@ -79,8 +78,15 @@ fun AppNavigation() {
 
         composable("login") {
             LoginScreen(
+
                 onLoginSuccess = { role ->
-                    navController.navigate(role) {
+
+                    val destino = when (role) {
+                        "centrocultural" -> "centroculturaldashboard"
+                        else -> role
+                    }
+
+                    navController.navigate(destino) {
                         popUpTo("login") { inclusive = true }
                     }
                 },
@@ -104,14 +110,12 @@ fun AppNavigation() {
         composable("superadmin") { SuperAdminScreen() }
         composable("artist") { ArtistScreen() }
         composable("centrocultural") { CentroCulturalScreen() }
-
+        composable("centroculturaldashboard") { CentroCulturalDashboardScreen() }
         composable("agenda") { AgendaScreen() }
-
 
         // Rutas de pantallas
         composable("eventos") { EventosScreen() }
         composable("galerias") { GaleriaScreen() }
-
     }
 }
 
@@ -134,58 +138,39 @@ fun HomeScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(ColorFondo)
-    ) {
-
-        // Header
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-
-            Text(
-            text = "Bienvenido a La Escena",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        Button(onClick = { navController.navigate("eventos") }) { Text("Ver eventos") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Ver artistas") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {
-            navController.navigate("galerias")
-        }) { Text("Galerías disponibles") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Centro cultural") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(
-            onClick = { navController.navigate("register") }
-
-        ) {
-            Text(
-                text = "La Escena",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = ColorPrimario
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                IconButton(onClick = { navController.navigate("agenda") }) {
-                    Icon(
-                        imageVector = Icons.Default.DateRange,
-                        contentDescription = "Agenda",
-                        tint = ColorTexto
-                    )
-                }
-                IconButton(onClick = { navController.navigate("login") }) {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "Perfil",
-                        tint = ColorTexto
-                    )
+    )
+         {
+            // Header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "La Escena",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = ColorPrimario
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    IconButton(onClick = { navController.navigate("agenda") }) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = "Agenda",
+                            tint = ColorTexto
+                        )
+                    }
+                    IconButton(onClick = { navController.navigate("login") }) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Perfil",
+                            tint = ColorTexto
+                        )
+                    }
                 }
             }
-        }
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -240,7 +225,34 @@ fun HomeScreen(navController: NavController) {
                     }
                 }
             }
+            item {
+                Text(
+                    text = "Explorar",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = ColorTexto
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Button(
+                        onClick = { navController.navigate("eventos") },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(containerColor = ColorPrimario),
+                        shape = RoundedCornerShape(8.dp)
+                    ) { Text("Eventos", color = Color.White) }
 
+                    Button(
+                        onClick = { navController.navigate("galerias") },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(containerColor = ColorPrimario),
+                        shape = RoundedCornerShape(8.dp)
+                    ) { Text("Galerías", color = Color.White) }
+
+                }
+            }
             // Barra de búsqueda
             item {
                 OutlinedTextField(
@@ -339,54 +351,134 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
-@Preview
 
+@Preview
 @Composable
 fun SuperAdminScreen() {
+
     Column(
-        Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .background(ColorFondo)
+            .padding(16.dp)
     ) {
-        Text(text = "Super Admin")
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Ver eventos") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Ver artistas") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Centro Cultural") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Galerías disponibles") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Crear evento") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Crear artista") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Crear galería") }
+
+        // HEADER
+        Text(
+            text = "Panel de Administrador",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = ColorPrimario
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Control total de la plataforma",
+            color = ColorTextoSecundario
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // LISTA DE OPCIONES
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+
+            item { AdminCard("Ver eventos") }
+            item { AdminCard("Ver artistas") }
+            item { AdminCard("Centro Cultural") }
+            item { AdminCard("Galerías disponibles") }
+            item { AdminCard("Crear evento") }
+            item { AdminCard("Crear artista") }
+            item { AdminCard("Crear galería") }
+        }
     }
 }
 
+@Composable
+fun ArtistCard(titulo: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = ColorSuperficie)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = titulo,
+                fontSize = 16.sp,
+                color = ColorTexto,
+                fontWeight = FontWeight.Medium
+            )
+
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = null,
+                tint = ColorPrimario
+            )
+        }
+    }
+}
 @Composable
 fun ArtistScreen() {
+
     Column(
-        Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .background(ColorFondo)
+            .padding(16.dp)
     ) {
-        Text(text = "Artista")
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Ver eventos") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Perfil") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Mensajes") }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = {}) { Text("Portafolio Artistico") }
+
+        // HEADER
+        Text(
+            text = "Panel de Artista",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = ColorPrimario
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Gestiona tu perfil y contenido",
+            color = ColorTextoSecundario
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // CONTENIDO
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+
+            item {
+                ArtistCard("Ver eventos")
+            }
+
+            item {
+                ArtistCard("Perfil")
+            }
+
+            item {
+                ArtistCard("Mensajes")
+            }
+
+            item {
+                ArtistCard("Portafolio artístico")
+            }
+        }
     }
 }
 
 @Composable
-fun CentroCulturalScreen() {
+fun CentroCulturalPublicaScreen() {
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -417,8 +509,6 @@ fun RegisterScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    // En el registro de tu servidor Ktor, solo se piden estos campos + role.
-    // He quitado el resto para evitar el error de conversion.
 
     val resultMessage by viewModel.loginResult.collectAsState()
     val isRegisterSuccess by viewModel.isRegisterSuccess.collectAsState()
@@ -433,38 +523,90 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)
-            .verticalScroll(rememberScrollState()),
+            .background(ColorFondo)
+            .padding(20.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Registro de Artista", style = MaterialTheme.typography.headlineMedium)
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Correo electrónico") })
-        Spacer(modifier = Modifier.height(10.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Contraseña") },
-            visualTransformation = PasswordVisualTransformation()
+        Text(
+            text = "Crear cuenta",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold,
+            color = ColorPrimario
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
-        Button(
-            onClick = {
-                // Mandamos "artista" como rol fijo para esta pantalla
-                viewModel.registrar(email, password, "artista")
-            }
+        Text(
+            text = "Regístrate como artista",
+            color = ColorTextoSecundario
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // CARD CONTENEDORA (como en Home)
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = ColorSuperficie),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Registrarse")
+            Column(modifier = Modifier.padding(16.dp)) {
+
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Correo") },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = ColorPrimario,
+                        unfocusedBorderColor = Color(0xFF444444),
+                        focusedTextColor = ColorTexto,
+                        unfocusedTextColor = ColorTexto,
+                        cursorColor = ColorPrimario
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Contraseña") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = ColorPrimario,
+                        unfocusedBorderColor = Color(0xFF444444),
+                        focusedTextColor = ColorTexto,
+                        unfocusedTextColor = ColorTexto,
+                        cursorColor = ColorPrimario
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    onClick = {
+                        viewModel.registrar(email, password, "artista")
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = ColorPrimario)
+                ) {
+                    Text("Registrarse", color = Color.White)
+                }
+            }
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = resultMessage, color = if (resultMessage.contains("Error")) Color.Red else Color.Black)
+        Text(
+            text = resultMessage,
+            color = if (resultMessage.contains("Error")) Color.Red else ColorTextoSecundario
+        )
     }
 }
 
@@ -560,7 +702,7 @@ fun GaleriaScreen() {
             //Imagenes
 
             @Composable
-            fun GaleriaPic(titulo: String, imagen: Painter){
+            fun GaleriaPic(titulo: String, imagen: Painter) {
                 Column {
                     Text(
                         text = titulo,
@@ -596,3 +738,160 @@ fun GaleriaScreen() {
         }
     }
 }
+    @Composable
+    fun CentroCulturalScreen() {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Image(
+                painter = painterResource(Res.drawable.cc),
+                contentDescription = "Centro Cultural Ricardo Garibay",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "Centro cultural Ricardo Garibay",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF212121),
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text(
+                text = "El centro cultural Ricardo Garibay es un espacio dedicado a la promoción y difusión de " +
+                        "la cultura local, ofreciendo eventos artísticos, exposiciones y talleres.\n" +
+                        "\n" +
+                        "Ubicado en el corazón de la ciudad, el centro cultural se ha convertido en un punto de encuentro para " +
+                        "artistas, escritores y amantes de la cultura, brindando un espacio para la expresión creativa y el intercambio " +
+                        "cultural.",
+                fontSize = 15.sp,
+                color = Color(0xFF212121),
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+
+@Composable
+fun CentroCulturalDashboardScreen() {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(ColorFondo)
+            .padding(16.dp)
+    ) {
+
+        Text(
+            text = "Centro Cultural",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = ColorPrimario
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+
+            item {
+                DashboardCard("Crear evento")
+            }
+
+            item {
+                DashboardCard("Mensajes")
+            }
+
+            item {
+                DashboardCard("Ver artistas")
+            }
+
+            item {
+                DashboardCard("Buscar artistas")
+            }
+
+            item {
+                DashboardCard("Crear galería")
+            }
+
+            item {
+                DashboardCard("Ver galerías")
+            }
+        }
+    }
+}
+
+@Composable
+fun DashboardCard(titulo: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = ColorSuperficie)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = titulo,
+                fontSize = 16.sp,
+                color = ColorTexto,
+                fontWeight = FontWeight.Medium
+            )
+
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = null,
+                tint = ColorPrimario
+            )
+        }
+    }
+}
+@Composable
+fun AdminCard(titulo: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = ColorSuperficie)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = titulo,
+                fontSize = 16.sp,
+                color = ColorTexto,
+                fontWeight = FontWeight.Medium
+            )
+
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = null,
+                tint = ColorPrimario
+            )
+        }
+    }
+}
+
+
+
