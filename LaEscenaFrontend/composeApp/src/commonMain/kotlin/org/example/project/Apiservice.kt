@@ -49,7 +49,7 @@ class Apiservice {
         }
     }
 
-    private val baseUrl = "http://10.222.169.1:8080"
+    private val baseUrl = "http://192.168.1.124:8080"
 
     suspend fun loginUsuario(email: String, password: String): CommonResponse {
         return try {
