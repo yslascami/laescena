@@ -48,8 +48,15 @@ data class Mensaje(
     val remitente: String,
     val asunto: String,
     val mensaje: String,
-    val leido: Int = 0,
     val created_at: String = ""
+)
+
+@Serializable
+data class MensajeCreateRequest(
+    val artista_id: Int,
+    val remitente: String,
+    val asunto: String,
+    val mensaje: String
 )
 
 @Serializable
@@ -86,7 +93,7 @@ class Apiservice {
         }
     }
 
-    suspend fun enviarMensaje(mensaje: Mensaje): CommonResponse {
+    suspend fun enviarMensaje(mensaje: MensajeCreateRequest): CommonResponse {
         return try {
             val response: HttpResponse = client.post("$baseUrl/mensajes") {
                 contentType(ContentType.Application.Json)

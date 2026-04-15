@@ -42,16 +42,14 @@ class MensajesViewModel : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val nuevoMensaje = Mensaje(
+                val request = MensajeCreateRequest(
                     artista_id = artistaId,
                     remitente = remitente,
                     asunto = asunto,
                     mensaje = contenido
                 )
-                val response = api.enviarMensaje(nuevoMensaje)
+                val response = api.enviarMensaje(request)
                 if (response.success) {
-                    _envioExitoso.value = true
-                    // RECARGA INMEDIATA DE LA LISTA
                     val actualizados = api.getMensajes(artistaId)
                     _mensajes.value = actualizados
                 } else {
