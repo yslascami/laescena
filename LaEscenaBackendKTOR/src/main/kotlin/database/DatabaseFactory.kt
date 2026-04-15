@@ -7,14 +7,20 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
     fun init() {
+        val host = System.getenv("DB_HOST") ?: "localhost"
+        val port = System.getenv("DB_PORT") ?: "3306"
+        val name = System.getenv("DB_NAME") ?: "laescena"
+        val user = System.getenv("DB_USER") ?: "root"
+        val password = System.getenv("DB_PASSWORD") ?: ""
+
         Database.connect(
-            url = "jdbc:mysql://localhost:3306/laescena?serverTimezone=UTC",
+            url = "jdbc:mysql://$host:$port/$name?serverTimezone=UTC",
             driver = "com.mysql.cj.jdbc.Driver",
-            user = "root",
-            password = ""
+            user = user,
+            password = password
         )
         transaction {
-            SchemaUtils.create(Users, Artistas, Portafolio, Eventos, Galerias)
+            SchemaUtils.create(Users, Artistas, Portafolio, Eventos, Galerias, Mensajes)
         }
     }
 }
