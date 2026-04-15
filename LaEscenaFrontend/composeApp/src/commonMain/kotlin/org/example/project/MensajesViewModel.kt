@@ -26,6 +26,8 @@ class MensajesViewModel : ViewModel() {
             _isLoading.value = true
             try {
                 val resultado = api.getMensajes(artistaId)
+                // Usamos una lista nueva para forzar el refresco del StateFlow
+                _mensajes.value = emptyList() 
                 _mensajes.value = resultado
                 _error.value = ""
             } catch (e: Exception) {
@@ -49,7 +51,9 @@ class MensajesViewModel : ViewModel() {
                 val response = api.enviarMensaje(nuevoMensaje)
                 if (response.success) {
                     _envioExitoso.value = true
-                    cargarMensajes(artistaId)
+                    // RECARGA INMEDIATA DE LA LISTA
+                    val actualizados = api.getMensajes(artistaId)
+                    _mensajes.value = actualizados
                 } else {
                     _error.value = response.message
                 }
