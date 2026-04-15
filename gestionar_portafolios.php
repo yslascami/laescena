@@ -175,7 +175,6 @@ $tipos_labels = ['imagen'=>'Imagen','video'=>'Video','audio'=>'Audio','documento
                 <li><a href="gestionar_recintos.php">Recintos</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
                 <li><a href="galeria.php">Galería</a></li>
-                <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">

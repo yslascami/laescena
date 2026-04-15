@@ -136,7 +136,6 @@ while ($r = mysqli_fetch_assoc($recintos_res)) $recintos[] = $r;
                 <li><a href="gestionar_recintos.php" class="active">Recintos</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
                 <li><a href="galeria.php">Galería</a></li>
-                <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">

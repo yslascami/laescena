@@ -389,7 +389,6 @@ function iconoTipoVer($tipo) {
                     <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
                         <li><a href="panel_admin.php">Panel Admin</a></li>
                     <?php endif; ?>
-                    <li><a href="logout.php">Cerrar sesión</a></li>
                 <?php else: ?>
                     <li><a href="Reg.html">Registro</a></li>
                     <li><a href="ing.html">Ingresar</a></li>
@@ -403,6 +402,16 @@ function iconoTipoVer($tipo) {
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
 
         <!-- Banner de portada -->
         <div class="portada-banner">

@@ -117,12 +117,14 @@
                 <?php if (isset($_SESSION['role'])): ?>
                     <?php if ($_SESSION['role'] == 'artista'): ?>
                         <li><a href="perfil.php">Mi Perfil</a></li>
+                        <li><a href="portafolio.php">Mi Portafolio</a></li>
+                        <li><a href="mensajes.php">Mensajes</a></li>
                     <?php elseif ($_SESSION['role'] == 'centrocultural'): ?>
                         <li><a href="panel_cc.php">Mi Panel</a></li>
+                        <li><a href="mensajes.php">Mensajes</a></li>
                     <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
                         <li><a href="panel_admin.php">Panel Admin</a></li>
                     <?php endif; ?>
-                    <li><a href="logout.php">Cerrar sesión</a></li>
                 <?php else: ?>
                     <li><a href="Reg.php">Registro</a></li>
                     <li><a href="ing.php">Ingresar</a></li>
@@ -136,6 +138,16 @@
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="page-header">
             <h1>Centro Cultural</h1>
             
@@ -181,9 +193,4 @@
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
         if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = 'Modo claro';
-        }
-    </script>
-</body>
-</html>
+      

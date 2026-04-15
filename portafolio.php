@@ -423,7 +423,6 @@ function iconoTipo($tipo, $ext = '') {
         <li><a href="perfil.php">Mi Perfil</a></li>
         <li><a href="portafolio.php" class="active">Mi Portafolio</a></li>
         <li><a href="mensajes.php">Mensajes</a></li>
-        <li><a href="logout.php">Cerrar sesión</a></li>
     </ul>
 </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -433,6 +432,16 @@ function iconoTipo($tipo, $ext = '') {
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="page-header">
             <h1>Mi Portafolio</h1>
         </div>
