@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_SESSION['artista_id'];
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
+    $telefono = trim($_POST['telefono'] ?? '');
     $descripcion = $_POST['descripcion'];
     $disciplina = $_POST['disciplina'];
     $telefono_publico = isset($_POST['telefono_publico']) ? 1 : 0;
@@ -43,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $foto_perfil = 'imagenes/' . $nuevo_nombre;
     }
 
-    $sql = "UPDATE artistas SET nombre=?, correo=?, descripcion=?, disciplina=?, foto_perfil=?, telefono_publico=?, correo_publico=? WHERE id=?";
+    $sql = "UPDATE artistas SET nombre=?, correo=?, `teléfono`=?, descripcion=?, disciplina=?, foto_perfil=?, telefono_publico=?, correo_publico=? WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssssssii", $nombre, $correo, $descripcion, $disciplina, $foto_perfil, $telefono_publico, $correo_publico, $id);
+    mysqli_stmt_bind_param($stmt, "sssssssii", $nombre, $correo, $telefono, $descripcion, $disciplina, $foto_perfil, $telefono_publico, $correo_publico, $id);
     mysqli_stmt_execute($stmt);
 
     $_SESSION['artista_nombre'] = $nombre;
@@ -342,6 +343,11 @@ $artista = mysqli_fetch_assoc($result);
                 <div class="form-group">
                     <label>Correo electrónico</label>
                     <input type="email" name="correo" value="<?= htmlspecialchars($artista['correo']) ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" name="telefono" value="<?= htmlspecialchars($artista['teléfono'] ?? '') ?>" placeholder="Tu número de teléfono">
                 </div>
 
                 <div class="form-group">
