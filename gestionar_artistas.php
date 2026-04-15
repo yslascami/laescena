@@ -7,10 +7,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'superadmin') {
     exit();
 }
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$user     = getenv('DB_USER')     ?: 'root';
+$password = getenv('DB_PASSWORD') ?: '';
+$database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 
 // ── Aprobar ────────────────────────────────────────────────────
@@ -334,12 +334,4 @@ while ($artista = mysqli_fetch_assoc($result)) {
             }
             localStorage.setItem('theme', html.getAttribute('data-theme'));
         }
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = 'Modo claro';
-        }
-    </script>
-</body>
-</html>
+        const savedTheme = local
