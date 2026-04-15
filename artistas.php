@@ -151,6 +151,10 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
                         <li><a href="mensajes.php">Mensajes</a></li>
                     <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
                         <li><a href="panel_admin.php">Panel Admin</a></li>
+                        <li><a href="gestionar_artistas.php">Artistas</a></li>
+                        <li><a href="gestionar_usuarios.php">Usuarios</a></li>
+                        <li><a href="gestionar_portafolios.php">Portafolios</a></li>
+                        <li><a href="gestionar_recintos.php">Recintos</a></li>
                     <?php endif; ?>
                 <?php else: ?>
                     <li><a href="Reg.php">Registro</a></li>

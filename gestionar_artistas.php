@@ -220,10 +220,12 @@ while ($artista = mysqli_fetch_assoc($result)) {
         </div>
         <nav>
             <ul>
-                <li><a href="panel_admin.php">Panel Admin</a></li>
+                <li><a href="panel_admin.php" >Panel Admin</a></li>
                 <li><a href="gestionar_artistas.php" class="active">Artistas</a></li>
-                <li><a href="artistas.php">Ver catálogo</a></li>
-                <li><a href="galeria.php">Galería</a></li>
+                <li><a href="gestionar_usuarios.php" >Usuarios</a></li>
+                <li><a href="gestionar_portafolios.php" >Portafolios</a></li>
+                <li><a href="gestionar_recintos.php" >Recintos</a></li>
+                <li><a href="galeria.php" >Galería</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
