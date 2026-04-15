@@ -1,0 +1,6 @@
+.gradle/
+build/
+/portafolio/
+/uploads/
+.idea/
+*.class

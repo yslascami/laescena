@@ -1,18 +1,21 @@
 package org.example.project
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ArtistasScreen(
-    onArtistClick: (String) -> Unit = {},
+    onArtistClick: (Int) -> Unit = {},
     viewModel: ArtistasViewModel = viewModel { ArtistasViewModel() }
 ) {
     val artistas by viewModel.artistas.collectAsState()
@@ -24,37 +27,39 @@ fun ArtistasScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier.fillMaxSize().background(ColorFondo).padding(16.dp)
     ) {
         Text(
-            text = "Artistas",
-            style = MaterialTheme.typography.headlineMedium
+            text = "Catálogo de Artistas",
+            style = MaterialTheme.typography.headlineMedium,
+            color = ColorPrimario
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         when {
             isLoading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = ColorPrimario)
+                }
             }
             error.isNotEmpty() -> {
-                Text(text = error, color = MaterialTheme.colorScheme.error)
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = error, color = Color.Red)
+                }
             }
             else -> {
-                LazyColumn {
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(artistas) { artista ->
                         Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            onClick = { onArtistClick(artista.nombre) }
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { onArtistClick(artista.id) },
+                            colors = CardDefaults.cardColors(containerColor = ColorSuperficie),
+                            shape = RoundedCornerShape(12.dp)
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
-                                Text(text = artista.nombre, style = MaterialTheme.typography.titleMedium)
-                                Text(text = artista.correo, style = MaterialTheme.typography.bodyMedium)
-                                Text(text = artista.telefono, style = MaterialTheme.typography.bodySmall)
+                                Text(text = artista.nombre, style = MaterialTheme.typography.titleMedium, color = ColorTexto)
+                                Text(text = artista.correo, style = MaterialTheme.typography.bodyMedium, color = ColorTextoSecundario)
                             }
                         }
                     }
