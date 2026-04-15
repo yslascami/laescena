@@ -14,3 +14,11 @@ local.properties
 fonts/ 
 imagenes/ 
 portafolio/ 
+
+# Build outputs
+LaEscenaFrontend/build/
+LaEscenaFrontend/composeApp/build/
+LaEscenaBackendKTOR/build/
+LaEscenaBackendKTOR/.gradle/
+**/.idea/
+local.properties

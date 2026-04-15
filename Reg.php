@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingresar - La Escena</title>
+    <title>Registro - La Escena</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        .login-wrapper {
+        .register-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -14,22 +14,22 @@
             padding: 30px;
         }
 
-        .login-card {
+        .register-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 4px;
             padding: 40px;
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
         }
 
-        .login-card h1 {
+        .register-card h1 {
             font-size: 28px;
             color: var(--primary);
             margin-bottom: 8px;
         }
 
-        .login-card p {
+        .register-card .subtitle {
             color: var(--text-secondary);
             font-size: 14px;
             margin-bottom: 30px;
@@ -65,7 +65,7 @@
             border-color: var(--primary);
         }
 
-        .btn-login {
+        .btn-register {
             width: 100%;
             padding: 14px;
             background-color: var(--primary);
@@ -80,7 +80,7 @@
             margin-bottom: 20px;
         }
 
-        .btn-login:hover { background-color: var(--primary-dark); }
+        .btn-register:hover { background-color: var(--primary-dark); }
 
         .footer-links {
             text-align: center;
@@ -111,8 +111,8 @@
                 <li><a href="artistas.php">Artistas</a></li>
                 <li><a href="eventos.php">Eventos</a></li>
                 <li><a href="galeria.php">Galería</a></li>
-                <li><a href="Reg.php">Registro</a></li>
-                <li><a href="ing.php" class="active">Ingresar</a></li>
+                <li><a href="Reg.php" class="active">Registro</a></li>
+                <li><a href="ing.php">Ingresar</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -122,26 +122,30 @@
     </div>
 
     <div class="main-content">
-        <div class="login-wrapper">
-            <div class="login-card">
-                <h1>Iniciar Sesión</h1>
-                <p>Accede a tu cuenta de La Escena</p>
+        <div class="register-wrapper">
+            <div class="register-card">
+                <h1>Registro de Artista</h1>
+                <p class="subtitle">Crea tu cuenta y forma parte de La Escena</p>
 
-                <form action="procesar_login.php" method="POST">
+                <form action="submit_registration.php" method="POST">
                     <div class="form-group">
-                        <label for="usuario"> Correo</label>
-                        <input type="text" id="usuario" name="usuario" placeholder="tu@correo.com" required>
+                        <label for="username">Nombre </label>
+                        <input type="text" id="username" name="username" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo </label>
+                        <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Contraseña</label>
                         <input type="password" id="password" name="password" placeholder="••••••••" required>
                     </div>
-                    <button type="submit" class="btn-login">Entrar</button>
+                    <button type="submit" class="btn-register">Registrarse</button>
                 </form>
 
                 <div class="footer-links">
-                    <p><a href="recuperar_password.php">¿Olvidaste tu contraseña?</a></p>
-                    <p><a href="index.php">Volver al inicio</a></p>
+                    
+                    <p><a href="index.html">Volver al inicio</a></p>
                 </div>
             </div>
         </div>

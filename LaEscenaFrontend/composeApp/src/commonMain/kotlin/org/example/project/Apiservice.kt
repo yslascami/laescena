@@ -19,8 +19,8 @@ data class RegisterRequest(val email: String, val password: String, val role: St
 
 @Serializable
 data class CommonResponse(
-    val success: Boolean, 
-    val message: String, 
+    val success: Boolean,
+    val message: String,
     val role: String? = null,
     val id: Int? = null
 )
@@ -45,11 +45,11 @@ data class Portafolio(
 data class Mensaje(
     val id: Int = 0,
     val artista_id: Int,
-    val remitente: String, // 'artista' o 'centrocultural'
+    val remitente: String,
     val asunto: String,
     val mensaje: String,
     val leido: Int = 0,
-    val created_at: String = "" // Sincronizado con la corrección del backend
+    val created_at: String = ""
 )
 
 @Serializable
@@ -75,7 +75,7 @@ class Apiservice {
         }
     }
 
-    private val baseUrl = "http://192.168.1.125:8080" 
+    private val baseUrl = "https://laescena-production-5298.up.railway.app"
     val mediaUrl = "$baseUrl/uploads"
 
     suspend fun getMensajes(artistaId: Int): List<Mensaje> {
@@ -177,7 +177,16 @@ class Apiservice {
                 contentType(ContentType.Application.Json)
                 setBody(RegisterRequest(email, password, role))
             }
-            response.body<CommonResponse>()
+            val contentType = response.contentType()
+            if (response.status == HttpStatusCode.OK || response.status == HttpStatusCode.Created) {
+                if (contentType?.match(ContentType.Application.Json) == true) {
+                    response.body<CommonResponse>()
+                } else {
+                    CommonResponse(success = true, message = response.bodyAsText())
+                }
+            } else {
+                CommonResponse(success = false, message = "Error: ${response.status.description}")
+            }
         } catch (e: Exception) {
             CommonResponse(success = false, message = "Error de conexión")
         }

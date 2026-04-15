@@ -6,7 +6,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'artista') {
     exit();
 }
 
-$host = "localhost"; $user = "root"; $password = ""; $database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost'; $user     = getenv('DB_USER')     ?: 'root'; $password = getenv('DB_PASSWORD') ?: ''; $database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 
 // Crear tabla portafolio si no existe (con tipo 'otro' añadido)
@@ -16,7 +16,7 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS portafolio (
     tipo ENUM('imagen','video','audio','documento','otro') NOT NULL DEFAULT 'otro',
     archivo VARCHAR(500) NOT NULL,
     titulo VARCHAR(255) DEFAULT '',
-    descripcion TEXT DEFAULT '',
+    descripcion TEXT NULL,
     nombre_original VARCHAR(500) DEFAULT '',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )");
@@ -414,16 +414,17 @@ function iconoTipo($tipo, $ext = '') {
             <h2>La Escena</h2>
         </div>
         <nav>
-            <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="artistas.php">Artistas</a></li>
-                <li><a href="eventos.php">Eventos</a></li>
-                <li><a href="galeria.php">Galería</a></li>
-                <li><a href="perfil.php">Mi Perfil</a></li>
-                <li><a href="portafolio.php" class="active">Mi Portafolio</a></li>
-                <li><a href="logout.php">Cerrar sesión</a></li>
-            </ul>
-        </nav>
+    <ul>
+        <li><a href="index.php">Inicio</a></li>
+        <li><a href="CC.php">Centro Cultural</a></li>
+        <li><a href="artistas.php">Artistas</a></li>
+        <li><a href="eventos.php">Eventos</a></li>
+        <li><a href="galeria.php">Galería</a></li>
+        <li><a href="perfil.php">Mi Perfil</a></li>
+        <li><a href="portafolio.php" class="active">Mi Portafolio</a></li>
+        <li><a href="mensajes.php">Mensajes</a></li>
+    </ul>
+</nav>
         <div class="theme-toggle" onclick="toggleTheme()">
             <span id="theme-label">Modo oscuro</span>
             <div class="toggle-switch on" id="toggle"></div>
@@ -431,6 +432,16 @@ function iconoTipo($tipo, $ext = '') {
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="page-header">
             <h1>Mi Portafolio</h1>
         </div>
@@ -783,22 +794,4 @@ function iconoTipo($tipo, $ext = '') {
             const toggle = document.getElementById('toggle');
             const label  = document.getElementById('theme-label');
             if (html.getAttribute('data-theme') === 'dark') {
-                html.setAttribute('data-theme', 'light');
-                toggle.classList.remove('on');
-                label.textContent = 'Modo claro';
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                toggle.classList.add('on');
-                label.textContent = 'Modo oscuro';
-            }
-            localStorage.setItem('theme', html.getAttribute('data-theme'));
-        }
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = 'Modo claro';
-        }
-    </script>
-</body>
-</html>
+        

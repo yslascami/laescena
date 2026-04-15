@@ -1,0 +1,10 @@
+# Proyectos que no forman parte de la web PHP
+LaEscenaBackendKTOR/
+LaEscenaFrontend/
+LaEscenaWeb/
+.idea/
+.git/
+
+# Archivos de desarrollo
+*.log
+local.properties

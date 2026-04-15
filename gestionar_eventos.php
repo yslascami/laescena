@@ -6,10 +6,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'centrocultural') {
     exit();
 }
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$user     = getenv('DB_USER')     ?: 'root';
+$password = getenv('DB_PASSWORD') ?: '';
+$database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 
 // Eliminar evento

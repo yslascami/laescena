@@ -6,7 +6,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] != 'artista' && $_SESSION['r
     exit();
 }
 
-$host = "localhost"; $user = "root"; $password = ""; $database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost'; $user     = getenv('DB_USER')     ?: 'root'; $password = getenv('DB_PASSWORD') ?: ''; $database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 
 if ($_SESSION['role'] == 'artista') {
@@ -302,7 +302,6 @@ $es_cc = $_SESSION['role'] === 'centrocultural';
                     <li><a href="panel_cc.php">Panel</a></li>
                 <?php endif; ?>
                 <li><a href="mensajes.php" class="active">Mensajes</a></li>
-                <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -312,6 +311,16 @@ $es_cc = $_SESSION['role'] === 'centrocultural';
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="page-header">
             <h1>Mensajes</h1>
         </div>

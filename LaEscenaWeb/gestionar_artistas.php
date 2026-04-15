@@ -334,12 +334,4 @@ while ($artista = mysqli_fetch_assoc($result)) {
             }
             localStorage.setItem('theme', html.getAttribute('data-theme'));
         }
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = 'Modo claro';
-        }
-    </script>
-</body>
-</html>
+        const savedTheme = local

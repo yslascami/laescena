@@ -2,201 +2,11 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Escena</title>
-
+    <link rel="stylesheet" href="estilos.css">
     <style>
-		@font-face {
-    font-family: 'Cormorant Garamond';
-    src: url('fonts/CormorantGaramond-Regular.ttf') format('truetype');
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'Cormorant Garamond';
-    src: url('fonts/CormorantGaramond-SemiBold.ttf') format('truetype');
-    font-weight: 600;
-}
-@font-face {
-    font-family: 'Cormorant Garamond';
-    src: url('fonts/CormorantGaramond-Light.ttf') format('truetype');
-    font-weight: 300;
-}
-@font-face {
-    font-family: 'Jost';
-    src: url('fonts/Jost-Regular.ttf') format('truetype');
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'Jost';
-    src: url('fonts/Jost-Light.ttf') format('truetype');
-    font-weight: 300;
-}
-@font-face {
-    font-family: 'Jost';
-    src: url('fonts/Jost-Medium.ttf') format('truetype');
-    font-weight: 500;
-}
-        :root[data-theme="dark"] {
-            --bg: #1C1C1C;
-            --sidebar-bg: #2A2A2A;
-            --card-bg: #2A2A2A;
-            --text: #FFFFFF;
-            --text-secondary: #AAAAAA;
-            --border: #3A3A3A;
-            --primary: rgb(173, 102, 108);
-            --primary-dark: rgb(129, 52, 58);
-        }
-
-        :root[data-theme="light"] {
-            --bg: #F4F4F4;
-            --sidebar-bg: #FFFFFF;
-            --card-bg: #FFFFFF;
-            --text: #1C1C1C;
-            --text-secondary: #666666;
-            --border: #DDDDDD;
-            --primary: rgb(173, 102, 108);
-            --primary-dark: rgb(129, 52, 58);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-}
-
-h1, h2, h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-
-        /* SIDEBAR */
-        .sidebar {
-    width: 220px;
-    min-width: 220px;
-    background-color: var(--sidebar-bg);
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0;
-    position: fixed;
-    height: 100vh;
-    border-right: 1px solid var(--border);
-    overflow-y: auto;
-}
-
-        .logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.logo-container img {
-    width: 130px;
-    height: auto;
-    object-fit: contain;
-}
-
-        .logo-container h2 {
-            color: var(--primary);
-            font-size: 18px;
-            margin-top: 10px;
-        }
-
-        nav ul { list-style: none; padding: 0; }
-
-        nav ul li { margin-bottom: 4px; }
-
-        nav ul li a {
-			font-family: 'Cormorant Garamond', serif;
-    		font-weight: 400;
-    		letter-spacing: 1px;
-    		font-size: 15px;
-            display: block;
-            width: 100%;
-            padding: 12px 20px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-family: verdana;
-            border-radius: 4px;
-            transition: background 0.2s, color 0.2s;
-            margin: 0 8px;
-            width: calc(100% - 16px);
-        }
-
-        nav ul li a:hover {
-            background-color: var(--primary-dark);
-            color: white;
-        }
-
-        nav ul li a.active {
-            background-color: var(--primary);
-            color: white;
-            font-weight: bold;
-        }
-
-        /* TOGGLE MODO */
-        .theme-toggle {
-            margin: auto 20px 20px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 10px 14px;
-            cursor: pointer;
-            color: var(--text);
-            font-size: 13px;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--primary);
-        }
-
-        .toggle-switch {
-            width: 36px;
-            height: 20px;
-            background-color: var(--border);
-            border-radius: 4px;
-            position: relative;
-            transition: background 0.3s;
-        }
-
-        .toggle-switch.on { background-color: var(--primary); }
-
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background: white;
-            border-radius: 4%;
-            top: 3px;
-            left: 3px;
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.on::after { left: 19px; }
-
-        /* CONTENIDO */
-        .main-content {
-    margin-left: 220px;
-    flex: 1;
-    overflow-y: auto;
-    padding: 30px;
-    width: calc(100% - 220px);
-    min-height: 100vh;
-	background-color: var(--bg);
-}
-
         .top-header {
             display: flex;
             justify-content: space-between;
@@ -209,21 +19,6 @@ h1, h2, h3 {
             color: var(--primary);
         }
 
-        .btn-ingresar {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .btn-ingresar:hover { background-color: var(--primary-dark); }
-
-        /* HERO */
         .hero-card {
             background: linear-gradient(135deg, #3B081E, var(--card-bg));
             border-radius: 4px;
@@ -242,60 +37,20 @@ h1, h2, h3 {
             margin-bottom: 24px;
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-            transition: background 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover { background-color: var(--primary-dark); }
-
-        /* CARDS */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
-
         .card {
-            background-color: var(--card-bg);
-            border-radius: 4px;
-            padding: 24px;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, border-color 0.2s;
-            text-decoration: none;
-            color: var(--text);
-            display: block;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
+    color: var(--text);
+    text-decoration: none;
+}
 
         .card-icon { font-size: 32px; margin-bottom: 12px; }
-
-        .card h3 { font-size: 18px; margin-bottom: 8px; }
-
+        .card h3 { font-size: 18px; margin-bottom: 8px; color: var(--text);
+    text-decoration: none;}
         .card p { color: var(--text-secondary); font-size: 14px; line-height: 1.5; }
-
-        .badge {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            margin-top: 12px;
-        }
     </style>
 </head>
 <body>
@@ -306,11 +61,11 @@ h1, h2, h3 {
         </div>
         <nav>
             <ul>
-                <li><a href="index.php" class="active"> Inicio</a></li>
-                <li><a href="CC.php"> Centro Cultural</a></li>
-                <li><a href="artistas.php"> Artistas</a></li>
-                <li><a href="eventos.php"> Eventos</a></li>
-                <li><a href="galeria.php"> Galería</a></li>
+                <li><a href="index.php" class="active">Inicio</a></li>
+                <li><a href="CC.php">Centro Cultural</a></li>
+                <li><a href="artistas.php">Artistas</a></li>
+                <li><a href="eventos.php">Eventos</a></li>
+                <li><a href="galeria.php">Galería</a></li>
                 <?php if (isset($_SESSION['role'])): ?>
                     <?php if ($_SESSION['role'] == 'artista'): ?>
                         <li><a href="perfil.php">Mi Perfil</a></li>
@@ -318,21 +73,34 @@ h1, h2, h3 {
                         <li><a href="panel_cc.php">Mi Panel</a></li>
                     <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
                         <li><a href="panel_admin.php">Panel Admin</a></li>
+                        <li><a href="gestionar_artistas.php">Artistas</a></li>
+                        <li><a href="gestionar_usuarios.php">Usuarios</a></li>
+                        <li><a href="gestionar_portafolios.php">Portafolios</a></li>
+                        <li><a href="gestionar_recintos.php">Recintos</a></li>
                     <?php endif; ?>
-                    <li><a href="logout.php">Cerrar sesión</a></li>
                 <?php else: ?>
-                    <li><a href="Reg.html">Registro</a></li>
-                    <li><a href="ing.html"> Ingresar</a></li>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
-            <span id="theme-label"> Modo oscuro</span>
+            <span id="theme-label">Modo oscuro</span>
             <div class="toggle-switch on" id="toggle"></div>
         </div>
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="top-header">
             <h1>Bienvenido a La Escena</h1>
         </div>
@@ -373,29 +141,21 @@ h1, h2, h3 {
 
     <script>
         function toggleTheme() {
-            const html = document.documentElement;
+            const html   = document.documentElement;
             const toggle = document.getElementById('toggle');
-            const label = document.getElementById('theme-label');
-
+            const label  = document.getElementById('theme-label');
             if (html.getAttribute('data-theme') === 'dark') {
                 html.setAttribute('data-theme', 'light');
                 toggle.classList.remove('on');
-                label.textContent = '☀️ Modo claro';
+                label.textContent = 'Modo claro';
             } else {
                 html.setAttribute('data-theme', 'dark');
                 toggle.classList.add('on');
-                label.textContent = '🌙 Modo oscuro';
+                label.textContent = 'Modo oscuro';
             }
-
             localStorage.setItem('theme', html.getAttribute('data-theme'));
         }
-
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
         if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = '☀️ Modo claro';
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('togg

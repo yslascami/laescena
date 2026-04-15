@@ -2,14 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'centrocultural') {
-    header("Location: ing.html");
+    header("Location: ing.php");
     exit();
 }
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$user     = getenv('DB_USER')     ?: 'root';
+$password = getenv('DB_PASSWORD') ?: '';
+$database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 
 // Contar artistas
@@ -148,6 +148,7 @@ $total_pendientes = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM artistas
                 <li><a href="gestionar_galerias.php">Galerías</a></li>
                 <li><a href="artistas.php">Ver catálogo</a></li>
                 <li><a href="galeria.php">Ver galería</a></li>
+                <li><a href="mensajes.php">Mensajes</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">

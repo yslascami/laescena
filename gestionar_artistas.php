@@ -7,10 +7,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'superadmin') {
     exit();
 }
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$user     = getenv('DB_USER')     ?: 'root';
+$password = getenv('DB_PASSWORD') ?: '';
+$database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 
 // ── Aprobar ────────────────────────────────────────────────────
@@ -220,10 +220,12 @@ while ($artista = mysqli_fetch_assoc($result)) {
         </div>
         <nav>
             <ul>
-                <li><a href="panel_admin.php">Panel Admin</a></li>
+                <li><a href="panel_admin.php" >Panel Admin</a></li>
                 <li><a href="gestionar_artistas.php" class="active">Artistas</a></li>
-                <li><a href="artistas.php">Ver catálogo</a></li>
-                <li><a href="galeria.php">Galería</a></li>
+                <li><a href="gestionar_usuarios.php" >Usuarios</a></li>
+                <li><a href="gestionar_portafolios.php" >Portafolios</a></li>
+                <li><a href="gestionar_recintos.php" >Recintos</a></li>
+                <li><a href="galeria.php" >Galería</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -296,9 +298,9 @@ while ($artista = mysqli_fetch_assoc($result)) {
                 <span class="estado-badge aprobado">Aprobado</span>
                 <h3><?= htmlspecialchars($artista['nombre']) ?></h3>
                 <p class="detalle"><?= htmlspecialchars($artista['disciplina'] ?? 'Sin disciplina') ?></p>
-                <p class="contacto">✉ <?= htmlspecialchars($artista['correo']) ?></p>
+                <p class="contacto"> <?= htmlspecialchars($artista['correo']) ?></p>
                 <?php if (!empty($artista['teléfono'])): ?>
-                <p class="contacto">☎ <?= htmlspecialchars($artista['teléfono']) ?></p>
+                <p class="contacto"> <?= htmlspecialchars($artista['teléfono']) ?></p>
                 <?php endif; ?>
             </div>
             <div class="acciones">
@@ -334,12 +336,4 @@ while ($artista = mysqli_fetch_assoc($result)) {
             }
             localStorage.setItem('theme', html.getAttribute('data-theme'));
         }
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = 'Modo claro';
-        }
-    </script>
-</body>
-</html>
+        const savedTheme = local

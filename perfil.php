@@ -6,17 +6,30 @@ if (!isset($_SESSION['artista_id'])) {
     exit();
 }
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$user     = getenv('DB_USER')     ?: 'root';
+$password = getenv('DB_PASSWORD') ?: '';
+$database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
+
+// Verificar si el artista está aprobado
+$id_check = $_SESSION['artista_id'];
+$sql_aprobado = "SELECT aprobado FROM artistas WHERE id = $id_check";
+$result_aprobado = mysqli_query($conn, $sql_aprobado);
+$check = mysqli_fetch_assoc($result_aprobado);
+
+if (!$check || $check['aprobado'] != 1) {
+    header("Location: pendiente.php");
+    exit();
+}
+
 
 // Procesar actualización
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_SESSION['artista_id'];
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
+    $telefono = trim($_POST['telefono'] ?? '');
     $descripcion = $_POST['descripcion'];
     $disciplina = $_POST['disciplina'];
     $telefono_publico = isset($_POST['telefono_publico']) ? 1 : 0;
@@ -31,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $foto_perfil = 'imagenes/' . $nuevo_nombre;
     }
 
-    $sql = "UPDATE artistas SET nombre=?, correo=?, descripcion=?, disciplina=?, foto_perfil=?, telefono_publico=?, correo_publico=? WHERE id=?";
+    $sql = "UPDATE artistas SET nombre=?, correo=?, `teléfono`=?, descripcion=?, disciplina=?, foto_perfil=?, telefono_publico=?, correo_publico=? WHERE id=?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssssssii", $nombre, $correo, $descripcion, $disciplina, $foto_perfil, $telefono_publico, $correo_publico, $id);
+    mysqli_stmt_bind_param($stmt, "sssssssii", $nombre, $correo, $telefono, $descripcion, $disciplina, $foto_perfil, $telefono_publico, $correo_publico, $id);
     mysqli_stmt_execute($stmt);
 
     $_SESSION['artista_nombre'] = $nombre;
@@ -279,7 +292,7 @@ $artista = mysqli_fetch_assoc($result);
                 <li><a href="galeria.php">Galería</a></li>
                 <li><a href="perfil.php" class="active">Mi Perfil</a></li>
                 <li><a href="portafolio.php">Mi Portafolio</a></li>
-                <li><a href="logout.php">Cerrar sesión</a></li>
+                <li><a href="mensajes.php">Mensajes</a></li>
             </ul>
         </nav>
         <div class="theme-toggle" onclick="toggleTheme()">
@@ -289,6 +302,16 @@ $artista = mysqli_fetch_assoc($result);
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="page-header">
             <h1>Mi Perfil</h1>
             <a href="logout.php"><button class="btn-logout">Cerrar sesión</button></a>
@@ -329,6 +352,11 @@ $artista = mysqli_fetch_assoc($result);
                 <div class="form-group">
                     <label>Correo electrónico</label>
                     <input type="email" name="correo" value="<?= htmlspecialchars($artista['correo']) ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" name="telefono" value="<?= htmlspecialchars($artista['teléfono'] ?? '') ?>" placeholder="Tu número de teléfono">
                 </div>
 
                 <div class="form-group">
@@ -389,12 +417,4 @@ $artista = mysqli_fetch_assoc($result);
             }
             localStorage.setItem('theme', html.getAttribute('data-theme'));
         }
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (savedTheme === 'light') {
-            document.getElementById('toggle').classList.remove('on');
-            document.getElementById('theme-label').textContent = 'Modo claro';
-        }
-    </script>
-</body>
-</html>
+        const savedTheme = loc

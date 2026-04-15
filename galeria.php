@@ -1,9 +1,9 @@
 <?php
 session_start();
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "laescena";
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$user     = getenv('DB_USER')     ?: 'root';
+$password = getenv('DB_PASSWORD') ?: '';
+$database = getenv('DB_NAME')     ?: 'laescena';
 $conn = mysqli_connect($host, $user, $password, $database);
 if (!$conn) die("Error de conexión: " . mysqli_connect_error());
 ?>
@@ -129,15 +129,21 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
                 <?php if (isset($_SESSION['role'])): ?>
                     <?php if ($_SESSION['role'] == 'artista'): ?>
                         <li><a href="perfil.php">Mi Perfil</a></li>
+                        <li><a href="portafolio.php">Mi Portafolio</a></li>
+                        <li><a href="mensajes.php">Mensajes</a></li>
                     <?php elseif ($_SESSION['role'] == 'centrocultural'): ?>
                         <li><a href="panel_cc.php">Mi Panel</a></li>
+                        <li><a href="mensajes.php">Mensajes</a></li>
                     <?php elseif ($_SESSION['role'] == 'superadmin'): ?>
                         <li><a href="panel_admin.php">Panel Admin</a></li>
+                        <li><a href="gestionar_artistas.php">Artistas</a></li>
+                        <li><a href="gestionar_usuarios.php">Usuarios</a></li>
+                        <li><a href="gestionar_portafolios.php">Portafolios</a></li>
+                        <li><a href="gestionar_recintos.php">Recintos</a></li>
                     <?php endif; ?>
-                    <li><a href="logout.php">Cerrar sesión</a></li>
                 <?php else: ?>
-                    <li><a href="Reg.html">Registro</a></li>
-                    <li><a href="ing.html">Ingresar</a></li>
+                    <li><a href="Reg.php">Registro</a></li>
+                    <li><a href="ing.php">Ingresar</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -148,6 +154,16 @@ if (!$conn) die("Error de conexión: " . mysqli_connect_error());
     </div>
 
     <div class="main-content">
+    <?php if (isset($_SESSION['role'])): ?>
+    <div class="session-bar">
+        <span class="user-chip"><?php
+            if ($_SESSION['role'] === 'artista') echo htmlspecialchars($_SESSION['artista_nombre'] ?? 'Artista');
+            elseif ($_SESSION['role'] === 'centrocultural') echo 'Centro Cultural';
+            elseif ($_SESSION['role'] === 'superadmin') echo 'Superadmin';
+        ?></span>
+        <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
+    </div>
+    <?php endif; ?>
         <div class="page-header">
             <h1>Galerías</h1>
             <p>Exposiciones y muestras artísticas en La Escena</p>
