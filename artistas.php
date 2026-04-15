@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 // Creamos una variable booleana para saber si es admin
