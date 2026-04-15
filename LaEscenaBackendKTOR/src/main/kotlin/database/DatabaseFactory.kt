@@ -12,6 +12,8 @@ object DatabaseFactory {
         val name = System.getenv("DB_NAME") ?: "laescena"
         val user = System.getenv("DB_USER") ?: "root"
         val password = System.getenv("DB_PASSWORD") ?: ""
+        println("Conectando a: jdbc:mysql://$host:$port/$name")  // <-- agrega esto
+        println("Usuario: $user")
 
         Database.connect(
             url = "jdbc:mysql://$host:$port/$name?serverTimezone=UTC",
