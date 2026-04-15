@@ -22,16 +22,39 @@ if (isset($_GET['eliminar'])) {
     exit();
 }
 
-// Filtro por artista
-$filtro_artista = isset($_GET['artista_id']) ? intval($_GET['artista_id']) : 0;
+// Filtros
+$filtro_artista    = isset($_GET['artista_id'])  ? intval($_GET['artista_id'])                    : 0;
+$filtro_disciplina = isset($_GET['disciplina'])  ? trim($_GET['disciplina'])                      : '';
+$filtro_tipo       = isset($_GET['tipo'])        ? trim($_GET['tipo'])                            : '';
 
-// Obtener artistas para el filtro
-$artistas_res = mysqli_query($conn, "SELECT id, nombre FROM artistas ORDER BY nombre ASC");
+// Artistas para el select (solo los que tienen portafolio)
+$artistas_res = mysqli_query($conn, "
+    SELECT DISTINCT a.id, a.nombre
+    FROM artistas a
+    INNER JOIN portafolio p ON p.artista_id = a.id
+    ORDER BY a.nombre ASC
+");
 $artistas_lista = [];
 while ($a = mysqli_fetch_assoc($artistas_res)) $artistas_lista[] = $a;
 
-// Obtener portafolio con JOIN a artistas
-$where = $filtro_artista ? "WHERE p.artista_id = $filtro_artista" : "";
+// Disciplinas para el select (solo las que tienen portafolio)
+$disciplinas_res = mysqli_query($conn, "
+    SELECT DISTINCT a.disciplina
+    FROM artistas a
+    INNER JOIN portafolio p ON p.artista_id = a.id
+    WHERE a.disciplina != '' AND a.disciplina IS NOT NULL
+    ORDER BY a.disciplina ASC
+");
+$disciplinas_lista = [];
+while ($d = mysqli_fetch_assoc($disciplinas_res)) $disciplinas_lista[] = $d['disciplina'];
+
+// Construir WHERE
+$wheres = [];
+if ($filtro_artista)    $wheres[] = "p.artista_id = $filtro_artista";
+if ($filtro_disciplina) $wheres[] = "a.disciplina = '" . mysqli_real_escape_string($conn, $filtro_disciplina) . "'";
+if ($filtro_tipo)       $wheres[] = "p.tipo = '"       . mysqli_real_escape_string($conn, $filtro_tipo) . "'";
+$where = $wheres ? "WHERE " . implode(" AND ", $wheres) : "";
+
 $items_res = mysqli_query($conn, "
     SELECT p.*, a.nombre AS artista_nombre, a.correo AS artista_correo,
            a.disciplina AS artista_disciplina, a.foto_perfil AS artista_foto
@@ -171,19 +194,38 @@ $tipos_labels = ['imagen'=>'Imagen','video'=>'Video','audio'=>'Audio','documento
         <div class="alert">✓ Ítem eliminado del portafolio.</div>
         <?php endif; ?>
 
-        <!-- Filtro -->
-        <form method="GET" class="filtro-bar">
-            <label>Filtrar por artista:</label>
+        <!-- Filtros -->
+        <form method="GET" class="filtro-bar" style="flex-wrap:wrap; gap:10px;">
+            <label>Artista:</label>
             <select name="artista_id">
-                <option value="0">Todos los artistas</option>
+                <option value="0">Todos</option>
                 <?php foreach ($artistas_lista as $a): ?>
                 <option value="<?= $a['id'] ?>" <?= $filtro_artista == $a['id'] ? 'selected' : '' ?>>
                     <?= htmlspecialchars($a['nombre']) ?>
                 </option>
                 <?php endforeach; ?>
             </select>
+
+            <label>Disciplina:</label>
+            <select name="disciplina">
+                <option value="">Todas</option>
+                <?php foreach ($disciplinas_lista as $d): ?>
+                <option value="<?= htmlspecialchars($d) ?>" <?= $filtro_disciplina === $d ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($d) ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label>Tipo:</label>
+            <select name="tipo">
+                <option value="">Todos</option>
+                <?php foreach (['imagen'=>'Imagen','video'=>'Video','audio'=>'Audio','documento'=>'Documento','otro'=>'Otro'] as $val => $lbl): ?>
+                <option value="<?= $val ?>" <?= $filtro_tipo === $val ? 'selected' : '' ?>><?= $lbl ?></option>
+                <?php endforeach; ?>
+            </select>
+
             <button type="submit" class="btn-filtrar">Filtrar</button>
-            <?php if ($filtro_artista): ?>
+            <?php if ($filtro_artista || $filtro_disciplina || $filtro_tipo): ?>
             <a href="gestionar_portafolios.php" class="btn-limpiar">Limpiar</a>
             <?php endif; ?>
             <span class="total-badge"><?= count($items) ?> archivo<?= count($items) !== 1 ? 's' : '' ?></span>

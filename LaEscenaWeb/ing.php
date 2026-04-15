@@ -1,4 +1,4 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -140,8 +140,8 @@
                 </form>
 
                 <div class="footer-links">
-                   
-                    <p><a href="index.html">Volver al inicio</a></p>
+                    <p><a href="recuperar_password.php">¿Olvidaste tu contraseña?</a></p>
+                    <p><a href="index.php">Volver al inicio</a></p>
                 </div>
             </div>
         </div>

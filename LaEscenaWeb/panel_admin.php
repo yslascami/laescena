@@ -21,14 +21,28 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS recintos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )");
 
+// Sembrar el Centro Cultural Ricardo Garibay si la tabla está vacía
+$check_recintos = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM recintos"))['n'];
+if ($check_recintos == 0) {
+    mysqli_query($conn, "INSERT INTO recintos (nombre, descripcion, direccion, sitio_web)
+        VALUES (
+            'Centro Cultural Ricardo Garibay',
+            'Espacio dedicado a la promoción y difusión de la cultura local, ofreciendo eventos artísticos, exposiciones y talleres para toda la comunidad.',
+            'Tulancingo, Hidalgo',
+            'https://sic.cultura.gob.mx/ficha.php?table=centro_cultural&table_id=442'
+        )");
+}
+
 // Estadísticas generales
-$total_users     = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM users"))['n'];
+$total_artistas_users = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM users WHERE role = 'artista'"))['n'];
+$total_cc             = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM users WHERE role = 'centrocultural'"))['n'];
+// Usuarios reales = artistas registrados + cuentas CC (excluye superadmin)
+$total_users     = $total_artistas_users + $total_cc;
 $total_artistas  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM artistas"))['n'];
 $total_aprobados = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM artistas WHERE aprobado = 1"))['n'];
 $total_pendientes= mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM artistas WHERE aprobado = 0"))['n'];
 $total_eventos   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM eventos"))['n'];
-$total_port      = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM portafolio"))['n'];
-$total_cc        = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM users WHERE role = 'centrocultural'"))['n'];
+$total_port      = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(DISTINCT artista_id) as n FROM portafolio"))['n'];
 $total_recintos  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as n FROM recintos"))['n'];
 
 // Registros por mes (últimos 6 meses)
@@ -202,6 +216,7 @@ $ultimos = mysqli_query($conn, "SELECT nombre, correo, disciplina, aprobado, cre
             <div class="stat-card">
                 <div class="numero"><?= $total_users ?></div>
                 <div class="label">Usuarios totales</div>
+                <div class="sub"><?= $total_artistas_users ?> artistas · <?= $total_cc ?> CC</div>
             </div>
             <div class="stat-card">
                 <div class="numero"><?= $total_artistas ?></div>
@@ -218,7 +233,8 @@ $ultimos = mysqli_query($conn, "SELECT nombre, correo, disciplina, aprobado, cre
             </div>
             <div class="stat-card">
                 <div class="numero"><?= $total_port ?></div>
-                <div class="label">Archivos en portafolios</div>
+                <div class="label">Portafolios activos</div>
+                <div class="sub">artistas con contenido</div>
             </div>
             <div class="stat-card">
                 <div class="numero"><?= $total_cc ?></div>
@@ -253,16 +269,7 @@ $ultimos = mysqli_query($conn, "SELECT nombre, correo, disciplina, aprobado, cre
                 <h3>Recintos / CC</h3>
                 <p>Agregar y gestionar recintos culturales.</p>
             </a>
-            <a href="gestionar_eventos.php" class="accion-card">
-                <div class="ac-icon"></div>
-                <h3>Gestionar Eventos</h3>
-                <p>Ver y administrar todos los eventos.</p>
-            </a>
-            <a href="gestionar_galerias.php" class="accion-card">
-                <div class="ac-icon"></div>
-                <h3>Galerías</h3>
-                <p>Gestionar galerías y exposiciones.</p>
-            </a>
+            
         </div>
 
         <!-- Gráficas -->
