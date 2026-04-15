@@ -13,7 +13,7 @@ $conn = mysqli_connect($host, $user, $password, $database);
 mysqli_query($conn, "CREATE TABLE IF NOT EXISTS recintos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    descripcion TEXT DEFAULT '',
+    descripcion TEXT NULL,
     direccion VARCHAR(500) DEFAULT '',
     telefono VARCHAR(50) DEFAULT '',
     correo VARCHAR(255) DEFAULT '',

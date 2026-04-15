@@ -29,7 +29,7 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS portafolio (
     tipo ENUM('imagen','video','audio','documento','otro') NOT NULL DEFAULT 'otro',
     archivo VARCHAR(500) NOT NULL,
     titulo VARCHAR(255) DEFAULT '',
-    descripcion TEXT DEFAULT '',
+    descripcion TEXT NULL,
     nombre_original VARCHAR(500) DEFAULT '',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )");
